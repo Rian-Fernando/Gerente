@@ -1,6 +1,7 @@
 {
   "name": "gerente",
   "version": "0.1.0",
+  "description": "Gerente - A Task Manager App",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
