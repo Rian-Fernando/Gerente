@@ -12,3 +12,7 @@ function App() {
 }
 
 export default App;
+
+// This is the main component of our app
+function App() {
+
