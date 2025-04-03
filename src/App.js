@@ -1,3 +1,6 @@
+console.log("Gerente is loading...");
+
+
 import React from 'react';
 import TaskList from './components/TaskList';  // Intentional issue: TaskList.js is empty
 import './styles.css';
