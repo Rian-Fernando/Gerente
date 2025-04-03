@@ -1,14 +1,18 @@
 import React from 'react';
-import TaskList from './components/TaskList';  // Intentional issue: TaskList.js is empty
-import './styles.css';
+import './App.css';
+import TaskList from './components/TaskList';  // Importing TaskList component
+import TaskInput from './components/TaskInput'; // Importing TaskInput component
 
 function App() {
-    return (
-        <div className="container">
-            <h1>Gerente - Task Manager</h1>
-            <TaskList />  {/* This will cause an error initially */}
-        </div>
-    );
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Gerente - Task Manager</h1>
+        <TaskInput />  {/* Input field for tasks */}
+        <TaskList />   {/* Task list display */}
+      </header>
+    </div>
+  );
 }
 
 export default App;
