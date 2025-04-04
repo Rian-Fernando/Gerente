@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import TaskList from './components/TaskList';  // Importing TaskList component
-import TaskInput from './components/TaskInput'; // Importing TaskInput component
+import TaskList from './components/TaskList';
+import TaskInput from './components/TaskInput';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Gerente - Task Manager</h1>
-        <TaskInput />  {/* Input field for tasks */}
-        <TaskList />   {/* Task list display */}
+        <TaskInput onAddTask={addTask} />
+        <TaskList tasks={tasks} />
       </header>
     </div>
   );
