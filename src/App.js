@@ -12,9 +12,9 @@ function App() {
   };
 
   const deleteTask = (indexToDelete) => {
+    console.log("Deleted task at index:", indexToDelete);
     const updatedTasks = tasks.filter((_, index) => index !== indexToDelete);
     setTasks(updatedTasks);
-    console.log("Deleted task at index:", indexToDelete); // ← for a bonus commit
   };
 
   return (
