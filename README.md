@@ -74,3 +74,6 @@ Gerente is a simple and effective task management application.
 - Add, edit, and delete tasks
 - Mark tasks as completed
 - Filter tasks by priority
+
+## New Feature (April 5):
+- You can now delete tasks using the ✖ button!
