@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import TaskItem from './TaskItem'; // Intentional bug: TaskItem.js is empty
+import React from 'react';
 
-function TaskList() {
-    const [tasks, setTasks] = useState([]); // Stores tasks
-
-    const addTask = () => {
-        const newTask = { id: tasks.length + 1, text: `Task ${tasks.length + 1}` };
-        setTasks([...tasks, newTask]);
-    };
-
-    return (
-        <div>
-            <h2>Your Tasks</h2>
-            <button onClick={addTask}>Add Task</button>
-            <ul>
-                {tasks.map(task => (
-                    <TaskItem key={task.id} task={task} /> // Will cause an error
-                ))}
-            </ul>
-        </div>
-    );
-}
+const TaskList = ({ tasks, onDeleteTask }) => {
+  return (
+    <ul style={{ listStyleType: "none", fontSize: "18px" }}>
+      {tasks.map((task, index) => (
+        <li key={index}>
+          {task}
+          <button 
+            onClick={() => onDeleteTask(index)} 
+            style={{ marginLeft: "10px", color: "red", background: "none", border: "none", cursor: "pointer" }}
+          >
+            ✖
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default TaskList;
