@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TaskList = ({ tasks, onDeleteTask, onToggleComplete }) => {
+const TaskList = ({ tasks, onDeleteTask, onToggleComplete, onEditTask }) => {
   console.log("Rendering TaskList:", tasks); // Debug log
 
   if (tasks.length === 0) {
@@ -11,15 +11,19 @@ const TaskList = ({ tasks, onDeleteTask, onToggleComplete }) => {
     <ul style={{ listStyleType: "none", fontSize: "18px", padding: 0 }}>
       {tasks.map((task, index) => (
         <li key={index} style={{ marginBottom: "10px" }}>
-          <input 
-            type="checkbox" 
-            checked={task.completed} 
-            onChange={() => onToggleComplete(index)} 
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => onToggleComplete(index)}
           />
-          <span style={{ 
-            textDecoration: task.completed ? 'line-through' : 'none',
-            marginLeft: "10px"
-          }}>
+          <span
+            onClick={() => onEditTask(index)}
+            style={{
+              textDecoration: task.completed ? 'line-through' : 'none',
+              marginLeft: "10px",
+              cursor: "pointer"
+            }}
+          >
             {task.text}
           </span>
           <button

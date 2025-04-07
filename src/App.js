@@ -3,8 +3,6 @@ import './App.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 
-console.log("App loaded at", new Date().toLocaleTimeString());
-
 function App() {
   const [tasks, setTasks] = useState([]);
 
@@ -28,12 +26,25 @@ function App() {
     console.log("Toggled complete for task:", index);
   };
 
+  const editTask = (indexToEdit) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === indexToEdit ? { ...task, isEditing: true } : task
+    );
+    setTasks(updatedTasks);
+    console.log("Editing task at index:", indexToEdit);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Gerente - Task Manager</h1>
         <TaskInput onAddTask={addTask} />
-        <TaskList tasks={tasks} onDeleteTask={deleteTask} onToggleComplete={toggleComplete} />
+        <TaskList
+          tasks={tasks}
+          onDeleteTask={deleteTask}
+          onToggleComplete={toggleComplete}
+          onEditTask={editTask}
+        />
       </header>
     </div>
   );
