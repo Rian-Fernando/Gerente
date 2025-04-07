@@ -3,6 +3,8 @@ import './App.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 
+console.log("App loaded at", new Date().toLocaleTimeString());
+
 function App() {
   const [tasks, setTasks] = useState([]);
 
