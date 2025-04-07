@@ -6,15 +6,24 @@ import TaskInput from './components/TaskInput';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-    console.log("Task added:", task);
+  const addTask = (text) => {
+    const newTask = { text, completed: false };
+    setTasks([...tasks, newTask]);
+    console.log("Task added:", newTask);
   };
 
   const deleteTask = (indexToDelete) => {
-    console.log("Deleted task at index:", indexToDelete);
     const updatedTasks = tasks.filter((_, index) => index !== indexToDelete);
     setTasks(updatedTasks);
+    console.log("Deleted task at index:", indexToDelete);
+  };
+
+  const toggleComplete = (index) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+    console.log("Toggled complete for task:", index);
   };
 
   return (
@@ -22,7 +31,7 @@ function App() {
       <header className="App-header">
         <h1>Gerente - Task Manager</h1>
         <TaskInput onAddTask={addTask} />
-        <TaskList tasks={tasks} onDeleteTask={deleteTask} />
+        <TaskList tasks={tasks} onDeleteTask={deleteTask} onToggleComplete={toggleComplete} />
       </header>
     </div>
   );
