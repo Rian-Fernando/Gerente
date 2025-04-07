@@ -1,6 +1,8 @@
 import React from 'react';
 
 const TaskList = ({ tasks, onDeleteTask, onToggleComplete }) => {
+  console.log("Rendering TaskList:", tasks); // Debug log
+
   if (tasks.length === 0) {
     return <p style={{ fontStyle: "italic", color: "#999" }}>No tasks yet!</p>;
   }
