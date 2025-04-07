@@ -1,6 +1,12 @@
 import React from 'react';
 
-const TaskList = ({ tasks, onDeleteTask, onToggleComplete, onEditTask }) => {
+const TaskList = ({
+  tasks,
+  onDeleteTask,
+  onToggleComplete,
+  onEditTask,
+  onSaveTask
+}) => {
   console.log("Rendering TaskList:", tasks); // Debug log
 
   if (tasks.length === 0) {
@@ -21,10 +27,10 @@ const TaskList = ({ tasks, onDeleteTask, onToggleComplete, onEditTask }) => {
             <input
               type="text"
               defaultValue={task.text}
+              autoFocus
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  // Save logic will be added in Step 4
-                  console.log("Enter pressed to save task:", index);
+                  onSaveTask(index, e.target.value);
                 }
               }}
               style={{

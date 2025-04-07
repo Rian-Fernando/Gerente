@@ -34,6 +34,14 @@ function App() {
     console.log("Editing task at index:", indexToEdit);
   };
 
+  const saveTask = (index, newText) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, text: newText, isEditing: false } : task
+    );
+    setTasks(updatedTasks);
+    console.log("Saved task:", updatedTasks[index]);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -44,6 +52,7 @@ function App() {
           onDeleteTask={deleteTask}
           onToggleComplete={toggleComplete}
           onEditTask={editTask}
+          onSaveTask={saveTask}
         />
       </header>
     </div>
