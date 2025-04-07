@@ -24,13 +24,15 @@ const TaskList = ({ tasks, onDeleteTask, onToggleComplete }) => {
           </span>
           <button
             onClick={() => onDeleteTask(index)}
+            className="delete-btn"
             style={{
               marginLeft: "10px",
               color: "#e63946",
               background: "none",
               border: "none",
               fontWeight: "bold",
-              cursor: "pointer"
+              cursor: "pointer",
+              transition: "color 0.2s"
             }}
           >
             ✖
