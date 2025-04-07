@@ -42,6 +42,14 @@ function App() {
     console.log("Saved task:", updatedTasks[index]);
   };
 
+  const cancelEdit = (index) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, isEditing: false } : task
+    );
+    setTasks(updatedTasks);
+    console.log("Canceled editing for task:", index);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -53,6 +61,7 @@ function App() {
           onToggleComplete={toggleComplete}
           onEditTask={editTask}
           onSaveTask={saveTask}
+          onCancelEdit={cancelEdit}
         />
       </header>
     </div>

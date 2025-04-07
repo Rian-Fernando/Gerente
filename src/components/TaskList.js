@@ -5,7 +5,8 @@ const TaskList = ({
   onDeleteTask,
   onToggleComplete,
   onEditTask,
-  onSaveTask
+  onSaveTask,
+  onCancelEdit
 }) => {
   console.log("Rendering TaskList:", tasks); // Debug log
 
@@ -31,6 +32,8 @@ const TaskList = ({
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   onSaveTask(index, e.target.value);
+                } else if (e.key === "Escape") {
+                  onCancelEdit(index);
                 }
               }}
               style={{
