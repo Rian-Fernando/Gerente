@@ -116,3 +116,14 @@ Coming soon: A live version of Gerente will be available at
 
 ## ✅ Completed Issues
 - Closes #4 – Implement Dark Mode Toggle
+
+---
+
+## ✨ Features
+
+- ✅ Add, edit, complete, and delete tasks
+- ✅ Mark tasks as completed with a checkbox
+- ✅ Edit tasks by clicking on them
+- ✅ Cancel editing with Escape key
+- ✅ Toggle between light and dark mode
+- ✅ Dark mode is saved between sessions
