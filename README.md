@@ -127,3 +127,7 @@ Coming soon: A live version of Gerente will be available at
 - ✅ Cancel editing with Escape key
 - ✅ Toggle between light and dark mode
 - ✅ Dark mode is saved between sessions
+
+---
+
+_Last updated: April 7, 2025_
