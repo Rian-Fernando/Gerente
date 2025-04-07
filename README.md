@@ -113,3 +113,6 @@ Coming soon: A live version of Gerente will be available at
 ## ✅ Completed Issues
 - Closes #1 – Set up project structure
 - Closes #2 – Fix TaskList component error
+
+## ✅ Completed Issues
+- Closes #4 – Implement Dark Mode Toggle
