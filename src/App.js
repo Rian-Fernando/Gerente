@@ -5,10 +5,13 @@ import TaskInput from './components/TaskInput';
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
 
   useEffect(() => {
     document.body.className = theme;
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
