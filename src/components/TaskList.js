@@ -16,16 +16,36 @@ const TaskList = ({ tasks, onDeleteTask, onToggleComplete, onEditTask }) => {
             checked={task.completed}
             onChange={() => onToggleComplete(index)}
           />
-          <span
-            onClick={() => onEditTask(index)}
-            style={{
-              textDecoration: task.completed ? 'line-through' : 'none',
-              marginLeft: "10px",
-              cursor: "pointer"
-            }}
-          >
-            {task.text}
-          </span>
+
+          {task.isEditing ? (
+            <input
+              type="text"
+              defaultValue={task.text}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  // Save logic will be added in Step 4
+                  console.log("Enter pressed to save task:", index);
+                }
+              }}
+              style={{
+                marginLeft: "10px",
+                padding: "4px",
+                fontSize: "16px"
+              }}
+            />
+          ) : (
+            <span
+              onClick={() => onEditTask(index)}
+              style={{
+                textDecoration: task.completed ? 'line-through' : 'none',
+                marginLeft: "10px",
+                cursor: "pointer"
+              }}
+            >
+              {task.text}
+            </span>
+          )}
+
           <button
             onClick={() => onDeleteTask(index)}
             className="delete-btn"
