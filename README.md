@@ -91,3 +91,13 @@ Gerente is a simple and effective task management application.
 - JavaScript (ES6+)
 - HTML & CSS
 - Git + GitHub (Version Control)
+
+---
+
+## 🚧 Planned Features
+
+- Task deadlines
+- Task priority (High/Medium/Low)
+- Edit existing tasks
+- Responsive mobile design
+- Dark mode toggle
