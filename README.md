@@ -82,3 +82,12 @@ Gerente is a simple and effective task management application.
 - Added feature to mark tasks as completed
 - Completed tasks show a strikethrough
 - Feature added using a feature branch + pull request
+
+---
+
+## ⚙️ Tech Stack
+
+- React (Frontend)
+- JavaScript (ES6+)
+- HTML & CSS
+- Git + GitHub (Version Control)
