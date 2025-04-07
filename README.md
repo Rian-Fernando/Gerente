@@ -101,3 +101,11 @@ Gerente is a simple and effective task management application.
 - Edit existing tasks
 - Responsive mobile design
 - Dark mode toggle
+
+---
+
+## 🔗 Live Preview
+
+Coming soon: A live version of Gerente will be available at  
+[https://gerente-app.vercel.app](https://gerente-app.vercel.app)  
+*(Link will go live after deployment)*
