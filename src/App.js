@@ -9,7 +9,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const addTask = (text) => {
-    const newTask = { text, completed: false };
+    const newTask = { text, completed: false, isEditing: false };
     setTasks([...tasks, newTask]);
     console.log("Task added:", newTask);
   };
