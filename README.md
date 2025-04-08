@@ -56,3 +56,8 @@ Coming soon: A live version of Gerente will be available at
 ---
 
 _Last updated: April 7, 2025_
+
+## 🟢 April 8 Update:
+- Added task priority system (High 🔴, Medium 🟡, Low 🟢)
+- Priority now visible with colored dots and background tints
+- Priority can be selected when adding tasks
