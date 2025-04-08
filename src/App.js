@@ -1,5 +1,3 @@
-// Theme toggling logic (light/dark mode)
-
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import TaskList from './components/TaskList';
@@ -20,8 +18,13 @@ function App() {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const addTask = (text) => {
-    const newTask = { text, completed: false, isEditing: false };
+  const addTask = (text, priority = 'medium') => {
+    const newTask = {
+      text,
+      completed: false,
+      isEditing: false,
+      priority // NEW FIELD 🟡
+    };
     setTasks([...tasks, newTask]);
     console.log("Task added:", newTask);
   };
