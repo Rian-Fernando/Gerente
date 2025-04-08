@@ -61,3 +61,17 @@ _Last updated: April 7, 2025_
 - Added task priority system (High 🔴, Medium 🟡, Low 🟢)
 - Priority now visible with colored dots and background tints
 - Priority can be selected when adding tasks
+
+---
+
+## 🛣️ Roadmap
+
+- [x] Task creation, editing, and deletion
+- [x] Mark tasks as completed
+- [x] Dark mode toggle with persistence
+- [x] Task priority system (High, Medium, Low)
+- [ ] Task sorting (priority, completion, A-Z)
+- [ ] Task deadlines and reminders
+- [ ] Responsive mobile UI
+- [ ] Live preview deployment
+- [ ] User authentication (optional)
