@@ -1,4 +1,5 @@
 import React from 'react';
+import { PRIORITY_COLORS } from '../constants/themes';
 
 const TaskList = ({
   tasks,
@@ -13,19 +14,6 @@ const TaskList = ({
   if (tasks.length === 0) {
     return <p style={{ fontStyle: "italic", color: "#999" }}>No tasks yet!</p>;
   }
-
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case 'high':
-        return '#e63946'; // red
-      case 'medium':
-        return '#f1c40f'; // yellow
-      case 'low':
-        return '#2ecc71'; // green
-      default:
-        return '#999';
-    }
-  };
 
   const getPriorityBackground = (priority) => {
     switch (priority) {
@@ -61,12 +49,13 @@ const TaskList = ({
             onChange={() => onToggleComplete(index)}
           />
 
+          {/* Priority Dot using constants */}
           <span
             style={{
               width: "10px",
               height: "10px",
               borderRadius: "50%",
-              backgroundColor: getPriorityColor(task.priority),
+              backgroundColor: PRIORITY_COLORS[task.priority],
               display: "inline-block",
               marginLeft: "10px",
               marginRight: "6px"
