@@ -27,17 +27,40 @@ const TaskList = ({
     }
   };
 
+  const getPriorityBackground = (priority) => {
+    switch (priority) {
+      case 'high':
+        return 'rgba(230, 57, 70, 0.1)';
+      case 'medium':
+        return 'rgba(241, 196, 15, 0.1)';
+      case 'low':
+        return 'rgba(46, 204, 113, 0.1)';
+      default:
+        return 'transparent';
+    }
+  };
+
   return (
     <ul style={{ listStyleType: "none", fontSize: "18px", padding: 0 }}>
       {tasks.map((task, index) => (
-        <li key={index} style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
+        <li
+          key={index}
+          style={{
+            marginBottom: "10px",
+            display: "flex",
+            alignItems: "center",
+            padding: "10px",
+            borderRadius: "8px",
+            backgroundColor: getPriorityBackground(task.priority),
+            transition: "background-color 0.3s"
+          }}
+        >
           <input
             type="checkbox"
             checked={task.completed}
             onChange={() => onToggleComplete(index)}
           />
 
-          {/* Priority Dot */}
           <span
             style={{
               width: "10px",
