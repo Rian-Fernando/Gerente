@@ -8,21 +8,47 @@ const TaskList = ({
   onSaveTask,
   onCancelEdit
 }) => {
-  console.log("Rendering TaskList:", tasks); // Debug log
+  console.log("Rendering TaskList:", tasks);
 
   if (tasks.length === 0) {
     return <p style={{ fontStyle: "italic", color: "#999" }}>No tasks yet!</p>;
   }
 
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 'high':
+        return '#e63946'; // red
+      case 'medium':
+        return '#f1c40f'; // yellow
+      case 'low':
+        return '#2ecc71'; // green
+      default:
+        return '#999';
+    }
+  };
+
   return (
     <ul style={{ listStyleType: "none", fontSize: "18px", padding: 0 }}>
       {tasks.map((task, index) => (
-        <li key={index} style={{ marginBottom: "10px" }}>
+        <li key={index} style={{ marginBottom: "10px", display: "flex", alignItems: "center" }}>
           <input
             type="checkbox"
             checked={task.completed}
             onChange={() => onToggleComplete(index)}
           />
+
+          {/* Priority Dot */}
+          <span
+            style={{
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              backgroundColor: getPriorityColor(task.priority),
+              display: "inline-block",
+              marginLeft: "10px",
+              marginRight: "6px"
+            }}
+          ></span>
 
           {task.isEditing ? (
             <input
@@ -37,7 +63,6 @@ const TaskList = ({
                 }
               }}
               style={{
-                marginLeft: "10px",
                 padding: "4px",
                 fontSize: "16px"
               }}
@@ -47,7 +72,7 @@ const TaskList = ({
               onClick={() => onEditTask(index)}
               style={{
                 textDecoration: task.completed ? 'line-through' : 'none',
-                marginLeft: "10px",
+                marginLeft: "5px",
                 cursor: "pointer"
               }}
             >
@@ -59,13 +84,12 @@ const TaskList = ({
             onClick={() => onDeleteTask(index)}
             className="delete-btn"
             style={{
-              marginLeft: "10px",
+              marginLeft: "auto",
               color: "#e63946",
               background: "none",
               border: "none",
               fontWeight: "bold",
-              cursor: "pointer",
-              transition: "color 0.2s"
+              cursor: "pointer"
             }}
           >
             ✖
