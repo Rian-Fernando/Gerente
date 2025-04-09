@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
+import SortTasks from './components/sort/SortTasks';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
+  const [sortMethod, setSortMethod] = useState("none");
 
   useEffect(() => {
     document.body.className = theme;
@@ -23,16 +25,14 @@ function App() {
       text,
       completed: false,
       isEditing: false,
-      priority // NEW FIELD 🟡
+      priority
     };
     setTasks([...tasks, newTask]);
-    console.log("Task added:", newTask);
   };
 
   const deleteTask = (indexToDelete) => {
     const updatedTasks = tasks.filter((_, index) => index !== indexToDelete);
     setTasks(updatedTasks);
-    console.log("Deleted task at index:", indexToDelete);
   };
 
   const toggleComplete = (index) => {
@@ -40,7 +40,6 @@ function App() {
       i === index ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
-    console.log("Toggled complete for task:", index);
   };
 
   const editTask = (indexToEdit) => {
@@ -48,7 +47,6 @@ function App() {
       i === indexToEdit ? { ...task, isEditing: true } : task
     );
     setTasks(updatedTasks);
-    console.log("Editing task at index:", indexToEdit);
   };
 
   const saveTask = (index, newText) => {
@@ -56,7 +54,6 @@ function App() {
       i === index ? { ...task, text: newText, isEditing: false } : task
     );
     setTasks(updatedTasks);
-    console.log("Saved task:", updatedTasks[index]);
   };
 
   const cancelEdit = (index) => {
@@ -64,7 +61,18 @@ function App() {
       i === index ? { ...task, isEditing: false } : task
     );
     setTasks(updatedTasks);
-    console.log("Canceled editing for task:", index);
+  };
+
+  const sortTasks = (tasks) => {
+    if (sortMethod === "priority") {
+      const priorityOrder = { high: 1, medium: 2, low: 3 };
+      return [...tasks].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    } else if (sortMethod === "az") {
+      return [...tasks].sort((a, b) => a.text.localeCompare(b.text));
+    } else if (sortMethod === "completed") {
+      return [...tasks].sort((a, b) => a.completed - b.completed);
+    }
+    return tasks;
   };
 
   return (
@@ -74,9 +82,10 @@ function App() {
         <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
           Toggle Theme
         </button>
+        <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
         <TaskInput onAddTask={addTask} />
         <TaskList
-          tasks={tasks}
+          tasks={sortTasks(tasks)}
           onDeleteTask={deleteTask}
           onToggleComplete={toggleComplete}
           onEditTask={editTask}
