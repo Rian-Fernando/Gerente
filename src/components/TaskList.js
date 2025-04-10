@@ -1,6 +1,7 @@
 import { formatDate } from '../helpers/formatDate';
 import React from 'react';
 import { PRIORITY_COLORS } from '../constants/themes';
+import { formatDate } from '../helpers/formatDate';
 
 const TaskList = ({
   tasks,
