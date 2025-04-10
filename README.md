@@ -55,12 +55,22 @@ Coming soon: A live version of Gerente will be available at
 
 ---
 
-_Last updated: April 7, 2025_
+_Last updated: April 10, 2025_
 
 ## 🟢 April 8 Update:
 - Added task priority system (High 🔴, Medium 🟡, Low 🟢)
 - Priority now visible with colored dots and background tints
 - Priority can be selected when adding tasks
+
+---
+
+## 🟢 April 10 Update:
+- Added `dueDate` field to task model
+- TaskInput includes calendar input
+- Tasks now show deadline in the list
+- Highlight 🟠 "Due Today" if deadline is today
+- Used `formatDate()` helper for cleaner display
+- Cleaned up commit history via rebase + force-push
 
 ---
 
@@ -70,8 +80,8 @@ _Last updated: April 7, 2025_
 - [x] Mark tasks as completed
 - [x] Dark mode toggle with persistence
 - [x] Task priority system (High, Medium, Low)
-- [ ] Task sorting (priority, completion, A-Z)
-- [ ] Task deadlines and reminders
+- [x] Task sorting (priority, completion, A-Z)
+- [x] Task deadlines with visual indicators
 - [ ] Responsive mobile UI
 - [ ] Live preview deployment
 - [ ] User authentication (optional)
