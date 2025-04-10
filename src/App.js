@@ -20,12 +20,13 @@ function App() {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const addTask = (text, priority = 'medium') => {
+  const addTask = (text, priority = 'medium', dueDate = '') => {
     const newTask = {
       text,
       completed: false,
       isEditing: false,
-      priority
+      priority,
+      dueDate
     };
     setTasks([...tasks, newTask]);
   };
