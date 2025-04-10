@@ -1,3 +1,4 @@
+import { formatDate } from '../helpers/formatDate';
 import React from 'react';
 import { PRIORITY_COLORS } from '../constants/themes';
 
@@ -112,7 +113,7 @@ const TaskList = ({
 
           {task.dueDate && (
             <div style={{ fontSize: "14px", fontStyle: "italic", color: "#666", marginTop: "4px" }}>
-              Due: {task.dueDate} {task.dueDate === today ? "🟠 Due Today!" : ""}
+              Due: {formatDate(task.dueDate)} {task.dueDate === today ? "🟠 Due Today!" : ""}
             </div>
           )}
         </li>
