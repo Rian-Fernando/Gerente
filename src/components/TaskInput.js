@@ -1,42 +1,50 @@
 import React, { useState } from 'react';
 
 const TaskInput = ({ onAddTask }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [text, setText] = useState('');
   const [priority, setPriority] = useState('medium');
+  const [dueDate, setDueDate] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputValue.trim() !== '') {
-      onAddTask(inputValue, priority);
-      setInputValue('');
-      setPriority('medium'); // reset priority
+  const handleAddTask = () => {
+    if (text.trim()) {
+      onAddTask(text, priority, dueDate);
+      setText('');
+      setPriority('medium');
+      setDueDate('');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+    <div style={{ marginBottom: '20px' }}>
       <input
         type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Add a new task"
-        style={{ padding: '8px', fontSize: '16px', width: '60%' }}
+        placeholder="Enter a task..."
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
       />
 
       <select
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
-        style={{ padding: '8px', marginLeft: '10px', fontSize: '16px' }}
+        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
       >
         <option value="high">High 🔴</option>
         <option value="medium">Medium 🟡</option>
         <option value="low">Low 🟢</option>
       </select>
 
-      <button type="submit" style={{ marginLeft: '10px' }}>
-        Add
+      <input
+        type="date"
+        value={dueDate}
+        onChange={(e) => setDueDate(e.target.value)}
+        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
+      />
+
+      <button onClick={handleAddTask} style={{ padding: '8px 16px', fontSize: '16px' }}>
+        Add Task
       </button>
-    </form>
+    </div>
   );
 };
 
