@@ -28,6 +28,8 @@ const TaskList = ({
     }
   };
 
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <ul style={{ listStyleType: "none", fontSize: "18px", padding: 0 }}>
       {tasks.map((task, index) => (
@@ -110,7 +112,7 @@ const TaskList = ({
 
           {task.dueDate && (
             <div style={{ fontSize: "14px", fontStyle: "italic", color: "#666", marginTop: "4px" }}>
-              Due: {task.dueDate}
+              Due: {task.dueDate} {task.dueDate === today ? "🟠 Due Today!" : ""}
             </div>
           )}
         </li>
