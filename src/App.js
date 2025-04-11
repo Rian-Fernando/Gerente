@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import './styles/AppContainer.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 import SortTasks from './components/sort/SortTasks';
@@ -77,7 +78,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app-container">
       <header className="App-header">
         <h1>Gerente - Task Manager</h1>
         <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
