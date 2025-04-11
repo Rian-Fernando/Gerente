@@ -4,6 +4,7 @@ import './styles/AppContainer.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 import SortTasks from './components/sort/SortTasks';
+import { APP_VERSION, APP_YEAR } from './constants/appInfo';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -101,7 +102,7 @@ function App() {
         color: "#888",
         marginTop: "30px"
       }}>
-        Gerente v1.0.0 © 2025
+        Gerente {APP_VERSION} © {APP_YEAR}
       </footer>
     </div>
   );
