@@ -95,6 +95,14 @@ function App() {
           onCancelEdit={cancelEdit}
         />
       </header>
+      <footer style={{
+        textAlign: "center",
+        fontSize: "14px",
+        color: "#888",
+        marginTop: "30px"
+      }}>
+        Gerente v1.0.0 © 2025
+      </footer>
     </div>
   );
 }
