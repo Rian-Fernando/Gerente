@@ -1,0 +1,22 @@
+/* src/styles/AppContainer.css */
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .app-container {
+      padding: 10px;
+    }
+  
+    .App-header h1 {
+      font-size: 22px;
+    }
+  
+    .App-header button {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  }
