@@ -5,6 +5,8 @@ import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 import SortTasks from './components/sort/SortTasks';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -79,32 +81,39 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <header className="App-header">
-        <h1>Gerente - Task Manager</h1>
-        <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
-          Toggle Theme
-        </button>
-        <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
-        <TaskInput onAddTask={addTask} />
-        <TaskList
-          tasks={sortTasks(tasks)}
-          onDeleteTask={deleteTask}
-          onToggleComplete={toggleComplete}
-          onEditTask={editTask}
-          onSaveTask={saveTask}
-          onCancelEdit={cancelEdit}
-        />
-      </header>
-      <footer style={{
-        textAlign: "center",
-        fontSize: "14px",
-        color: "#888",
-        marginTop: "30px"
-      }}>
-        Gerente {APP_VERSION} © {APP_YEAR}
-      </footer>
-    </div>
+    <Router>
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={
+            <header className="App-header">
+              <h1>Gerente - Task Manager</h1>
+              <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
+                Toggle Theme
+              </button>
+              <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
+              <TaskInput onAddTask={addTask} />
+              <TaskList
+                tasks={sortTasks(tasks)}
+                onDeleteTask={deleteTask}
+                onToggleComplete={toggleComplete}
+                onEditTask={editTask}
+                onSaveTask={saveTask}
+                onCancelEdit={cancelEdit}
+              />
+            </header>
+          } />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <footer style={{
+          textAlign: "center",
+          fontSize: "14px",
+          color: "#888",
+          marginTop: "30px"
+        }}>
+          Gerente {APP_VERSION} © {APP_YEAR}
+        </footer>
+      </div>
+    </Router>
   );
 }
 
