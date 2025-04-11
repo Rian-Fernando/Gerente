@@ -15,19 +15,28 @@ const TaskInput = ({ onAddTask }) => {
   };
 
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div
+      style={{
+        marginBottom: '20px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '10px',
+        flexDirection: window.innerWidth <= 600 ? 'column' : 'row',
+        alignItems: 'flex-start'
+      }}
+    >
       <input
         type="text"
         placeholder="Enter a task..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
+        style={{ padding: '8px', fontSize: '16px' }}
       />
 
       <select
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
+        style={{ padding: '8px', fontSize: '16px' }}
       >
         <option value="high">High 🔴</option>
         <option value="medium">Medium 🟡</option>
@@ -38,7 +47,7 @@ const TaskInput = ({ onAddTask }) => {
         type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px', marginRight: '10px' }}
+        style={{ padding: '8px', fontSize: '16px' }}
       />
 
       <button onClick={handleAddTask} style={{ padding: '8px 16px', fontSize: '16px' }}>
