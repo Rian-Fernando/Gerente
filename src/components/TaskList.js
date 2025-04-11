@@ -41,7 +41,7 @@ const TaskList = ({
             marginBottom: "10px",
             display: "flex",
             flexDirection: "column",
-            padding: "10px",
+            padding: window.innerWidth <= 600 ? "8px" : "10px",
             borderRadius: "8px",
             backgroundColor: getPriorityBackground(task.priority),
             transition: "background-color 0.3s"
