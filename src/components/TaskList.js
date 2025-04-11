@@ -99,13 +99,16 @@ const TaskList = ({
             <button
               onClick={() => onDeleteTask(index)}
               className="delete-btn"
+              onMouseEnter={(e) => (e.target.style.color = "#ff0000")}
+              onMouseLeave={(e) => (e.target.style.color = "#e63946")}
               style={{
                 marginLeft: "auto",
                 color: "#e63946",
                 background: "none",
                 border: "none",
                 fontWeight: "bold",
-                cursor: "pointer"
+                cursor: "pointer",
+                transition: "color 0.3s ease"
               }}
             >
               ✖
