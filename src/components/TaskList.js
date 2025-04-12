@@ -1,5 +1,5 @@
 import { formatDate } from '../helpers/formatDate';
-import React from 'react';
+import React, { useState } from 'react';
 import { PRIORITY_COLORS, CATEGORY_COLORS } from '../constants/themes';
 import {
   DragDropContext,
@@ -17,6 +17,7 @@ const TaskList = ({
   onReorderTasks,
   onStartPomodoro
 }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   console.log("Rendering TaskList:", tasks);
 
   if (tasks.length === 0) {
@@ -62,6 +63,8 @@ const TaskList = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
                     style={{
                       ...provided.draggableProps.style,
                       marginBottom: "10px",
@@ -70,7 +73,9 @@ const TaskList = ({
                       padding: window.innerWidth <= 600 ? "8px" : "10px",
                       borderRadius: "8px",
                       backgroundColor: getPriorityBackground(task.priority),
-                      transition: "background-color 0.3s"
+                      boxShadow: hoveredIndex === index ? "0 4px 12px rgba(0,0,0,0.15)" : "0 2px 4px rgba(0,0,0,0.05)",
+                      transform: hoveredIndex === index ? "translateY(-2px)" : "none",
+                      transition: "all 0.3s ease"
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center" }}>
