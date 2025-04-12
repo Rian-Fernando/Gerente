@@ -1,7 +1,7 @@
 // Temporary comment for code review tracking
 import { formatDate } from '../helpers/formatDate';
 import React from 'react';
-import { PRIORITY_COLORS } from '../constants/themes';
+import { PRIORITY_COLORS, CATEGORY_COLORS } from '../constants/themes';
 import {
   DragDropContext,
   Droppable,
@@ -127,7 +127,7 @@ const TaskList = ({
                           style={{
                             fontSize: "12px",
                             color: "#fff",
-                            backgroundColor: "#666",
+                            backgroundColor: CATEGORY_COLORS[task.category] || "#666",
                             borderRadius: "4px",
                             padding: "2px 6px",
                             marginLeft: "10px",
