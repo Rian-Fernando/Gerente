@@ -121,6 +121,23 @@ const TaskList = ({
                         </span>
                       )}
 
+                      {task.category && (
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "#fff",
+                            backgroundColor: "#666",
+                            borderRadius: "4px",
+                            padding: "2px 6px",
+                            marginLeft: "10px",
+                            fontWeight: "bold",
+                            textTransform: "uppercase"
+                          }}
+                        >
+                          {task.category}
+                        </span>
+                      )}
+
                       <button
                         onClick={() => onDeleteTask(index)}
                         className="delete-btn"
