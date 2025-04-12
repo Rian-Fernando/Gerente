@@ -26,9 +26,20 @@ function App() {
   const [focusMode, setFocusMode] = useState(false);
 
   useEffect(() => {
+    const storedTasks = localStorage.getItem("workspaceTasks");
+    if (storedTasks) {
+      setWorkspaceTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  useEffect(() => {
     document.body.className = theme;
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem("workspaceTasks", JSON.stringify(workspaceTasks));
+  }, [workspaceTasks]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
