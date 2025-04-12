@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './TaskInput.css';
 
 const TaskInput = ({ onAddTask }) => {
   const [text, setText] = useState('');
@@ -72,17 +73,7 @@ const TaskInput = ({ onAddTask }) => {
         }}
       />
 
-      <button onClick={handleAddTask} style={{
-          padding: '10px 20px',
-          fontSize: '16px',
-          backgroundColor: '#1a73e8',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '10px',
-          cursor: 'pointer',
-          fontWeight: '600',
-          transition: 'background 0.3s ease'
-        }}>
+      <button onClick={handleAddTask} className="add-task-btn">
         Add Task
       </button>
     </div>
