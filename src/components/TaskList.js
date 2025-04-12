@@ -181,8 +181,25 @@ const TaskList = ({
                     </div>
 
                     {task.dueDate && (
-                      <div style={{ fontSize: "14px", fontStyle: "italic", color: "#666", marginTop: "4px" }}>
-                        Due: {formatDate(task.dueDate)} {task.dueDate === today ? "🟠 Due Today!" : ""}
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          fontStyle: "italic",
+                          color: new Date(task.dueDate) < new Date(today)
+                            ? "#e74c3c"
+                            : task.dueDate === today
+                            ? "#f39c12"
+                            : "#666",
+                          marginTop: "4px",
+                          fontWeight: new Date(task.dueDate) < new Date(today) ? "bold" : "normal"
+                        }}
+                      >
+                        Due: {formatDate(task.dueDate)}{" "}
+                        {new Date(task.dueDate) < new Date(today)
+                          ? "🔴 Overdue"
+                          : task.dueDate === today
+                          ? "🟠 Due Today!"
+                          : ""}
                       </div>
                     )}
                     {task.completed && task.createdAt && task.completedAt && (
