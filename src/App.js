@@ -22,6 +22,7 @@ function App() {
     return localStorage.getItem('theme') || 'light';
   });
   const [sortMethod, setSortMethod] = useState("none");
+  const [focusMode, setFocusMode] = useState(false);
 
   useEffect(() => {
     document.body.className = theme;
@@ -113,11 +114,18 @@ function App() {
           <Route path="/" element={
             <header className="App-header">
               <h1>Gerente - Task Manager</h1>
-              <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
-                Toggle Theme
+              <button onClick={() => setFocusMode(prev => !prev)} style={{ marginBottom: '1rem' }}>
+                {focusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
               </button>
-              <WorkspaceTabs activeWorkspace={activeWorkspace} setActiveWorkspace={setActiveWorkspace} />
-              <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
+              {!focusMode && (
+                <>
+                  <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
+                    Toggle Theme
+                  </button>
+                  <WorkspaceTabs activeWorkspace={activeWorkspace} setActiveWorkspace={setActiveWorkspace} />
+                  <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
+                </>
+              )}
               <TaskInput onAddTask={addTask} />
               <TaskList
                 tasks={sortTasks(workspaceTasks[activeWorkspace])}
