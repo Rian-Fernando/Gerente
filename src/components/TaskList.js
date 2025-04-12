@@ -120,6 +120,11 @@ const TaskList = ({
               Due: {formatDate(task.dueDate)} {task.dueDate === today ? "🟠 Due Today!" : ""}
             </div>
           )}
+          {task.completed && task.createdAt && task.completedAt && (
+            <div style={{ fontSize: "13px", color: "#444", marginTop: "2px" }}>
+              Completed in {Math.round((new Date(task.completedAt) - new Date(task.createdAt)) / 60000)} minutes
+            </div>
+          )}
         </li>
       ))}
     </ul>
