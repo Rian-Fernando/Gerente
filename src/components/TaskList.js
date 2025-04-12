@@ -1,4 +1,3 @@
-// Temporary comment for code review tracking
 import { formatDate } from '../helpers/formatDate';
 import React from 'react';
 import { PRIORITY_COLORS, CATEGORY_COLORS } from '../constants/themes';
@@ -138,6 +137,22 @@ const TaskList = ({
                           {task.category}
                         </span>
                       )}
+
+                      <button
+                        title="Toggle Pomodoro Mode"
+                        onClick={() => alert(`Pomodoro Mode toggled for task: ${task.text}`)}
+                        style={{
+                          marginLeft: "10px",
+                          color: "#f39c12",
+                          background: "none",
+                          border: "none",
+                          fontSize: "16px",
+                          cursor: "pointer",
+                          transition: "color 0.3s ease"
+                        }}
+                      >
+                        🍅
+                      </button>
 
                       <button
                         onClick={() => onDeleteTask(index)}
