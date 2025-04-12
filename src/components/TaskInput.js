@@ -31,6 +31,11 @@ const TaskInput = ({ onAddTask }) => {
         placeholder="Enter a task..."
         value={text}
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleAddTask();
+          }
+        }}
         style={{
           padding: '10px 14px',
           fontSize: '16px',
