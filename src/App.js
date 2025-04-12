@@ -9,6 +9,7 @@ import SummaryDashboard from './components/summary/SummaryDashboard';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
+import PomodoroTimer from './components/PomodoroTimer';
 
 function App() {
   const [workspaceTasks, setWorkspaceTasks] = useState({
@@ -24,6 +25,7 @@ function App() {
   });
   const [sortMethod, setSortMethod] = useState("none");
   const [focusMode, setFocusMode] = useState(false);
+  const [pomodoroTask, setPomodoroTask] = useState(null);
 
   useEffect(() => {
     const storedTasks = localStorage.getItem("workspaceTasks");
@@ -170,11 +172,18 @@ function App() {
                 onSaveTask={saveTask}
                 onCancelEdit={cancelEdit}
                 onReorderTasks={reorderTasks}
+                onStartPomodoro={(task) => setPomodoroTask(task)}
               />
             </header>
           } />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {pomodoroTask && (
+          <PomodoroTimer
+            task={pomodoroTask}
+            onClose={() => setPomodoroTask(null)}
+          />
+        )}
         <footer style={{
           textAlign: "center",
           fontSize: "14px",

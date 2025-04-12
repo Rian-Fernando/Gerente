@@ -14,7 +14,8 @@ const TaskList = ({
   onEditTask,
   onSaveTask,
   onCancelEdit,
-  onReorderTasks
+  onReorderTasks,
+  onStartPomodoro
 }) => {
   console.log("Rendering TaskList:", tasks);
 
@@ -140,7 +141,7 @@ const TaskList = ({
 
                       <button
                         title="Toggle Pomodoro Mode"
-                        onClick={() => alert(`Pomodoro Mode toggled for task: ${task.text}`)}
+                        onClick={() => onStartPomodoro(task)}
                         style={{
                           marginLeft: "10px",
                           color: "#f39c12",
