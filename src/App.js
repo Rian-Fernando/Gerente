@@ -129,6 +129,13 @@ function App() {
     return tasks;
   };
 
+  const reorderTasks = (newOrder) => {
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: newOrder
+    }));
+  };
+
   return (
     <Router>
       <div className="app-container">
@@ -162,6 +169,7 @@ function App() {
                 onEditTask={editTask}
                 onSaveTask={saveTask}
                 onCancelEdit={cancelEdit}
+                onReorderTasks={reorderTasks}
               />
             </header>
           } />
