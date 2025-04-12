@@ -39,7 +39,9 @@ function App() {
       completed: false,
       isEditing: false,
       priority,
-      dueDate
+      dueDate,
+      createdAt: new Date().toISOString(),
+      completedAt: null
     };
     setWorkspaceTasks(prev => ({
       ...prev,
@@ -56,9 +58,17 @@ function App() {
   };
 
   const toggleComplete = (index) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
+    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) => {
+      if (i === index) {
+        const isCompleted = !task.completed;
+        return {
+          ...task,
+          completed: isCompleted,
+          completedAt: isCompleted ? new Date().toISOString() : null
+        };
+      }
+      return task;
+    });
     setWorkspaceTasks(prev => ({
       ...prev,
       [activeWorkspace]: updatedTasks
