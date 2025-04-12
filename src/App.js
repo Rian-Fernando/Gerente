@@ -5,6 +5,7 @@ import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 import SortTasks from './components/sort/SortTasks';
 import WorkspaceTabs from './components/workspace/WorkspaceTabs';
+import SummaryDashboard from './components/summary/SummaryDashboard';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
@@ -124,6 +125,12 @@ function App() {
           <Route path="/" element={
             <header className="App-header">
               <h1>Gerente - Task Manager</h1>
+              {!focusMode && (
+                <SummaryDashboard
+                  tasks={workspaceTasks[activeWorkspace]}
+                  activeWorkspace={activeWorkspace}
+                />
+              )}
               <button onClick={() => setFocusMode(prev => !prev)} style={{ marginBottom: '1rem' }}>
                 {focusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
               </button>
