@@ -1,6 +1,12 @@
-
-
 import React from 'react';
+
+const tabInfo = {
+  Personal: { icon: '🏠', color: '#007bff' },
+  Work: { icon: '💼', color: '#e63946' },
+  School: { icon: '🎓', color: '#f39c12' },
+  Fitness: { icon: '💪', color: '#2ecc71' },
+  Other: { icon: '📁', color: '#95a5a6' }
+};
 
 const tabs = ['Personal', 'Work', 'School', 'Fitness', 'Other'];
 
@@ -20,10 +26,13 @@ const WorkspaceTabs = ({ activeWorkspace, setActiveWorkspace }) => {
             color: activeWorkspace === tab ? '#fff' : '#333',
             cursor: 'pointer',
             boxShadow: activeWorkspace === tab ? '0 2px 6px rgba(0,0,0,0.2)' : 'none',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            borderLeft: activeWorkspace === tab ? `6px solid ${tabInfo[tab].color}` : '6px solid transparent',
+            paddingLeft: '10px',
           }}
         >
-          {tab}
+          <span style={{ marginRight: '6px' }}>{tabInfo[tab].icon}</span>
+          <span>{tab}</span>
         </button>
       ))}
     </div>
