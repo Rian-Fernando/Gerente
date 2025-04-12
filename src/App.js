@@ -144,7 +144,19 @@ function App() {
         <Routes>
           <Route path="/" element={
             <header className="App-header">
-              <h1>Gerente - Task Manager</h1>
+              <h1 style={{
+                fontSize: "2.8rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#1a1a1a",
+                textAlign: "center",
+                background: "linear-gradient(90deg, #111, #444)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                letterSpacing: "0.5px"
+              }}>
+                Gerente – Task Manager
+              </h1>
               {!focusMode && (
                 <SummaryDashboard
                   tasks={workspaceTasks[activeWorkspace]}
