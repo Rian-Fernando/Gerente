@@ -4,12 +4,20 @@ import './styles/AppContainer.css';
 import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
 import SortTasks from './components/sort/SortTasks';
+import WorkspaceTabs from './components/workspace/WorkspaceTabs';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [workspaceTasks, setWorkspaceTasks] = useState({
+    Personal: [],
+    Work: [],
+    School: [],
+    Fitness: [],
+    Other: []
+  });
+  const [activeWorkspace, setActiveWorkspace] = useState("Personal");
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
@@ -32,40 +40,58 @@ function App() {
       priority,
       dueDate
     };
-    setTasks([...tasks, newTask]);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: [...prev[activeWorkspace], newTask]
+    }));
   };
 
   const deleteTask = (indexToDelete) => {
-    const updatedTasks = tasks.filter((_, index) => index !== indexToDelete);
-    setTasks(updatedTasks);
+    const updatedTasks = workspaceTasks[activeWorkspace].filter((_, index) => index !== indexToDelete);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: updatedTasks
+    }));
   };
 
   const toggleComplete = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
+    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
       i === index ? { ...task, completed: !task.completed } : task
     );
-    setTasks(updatedTasks);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: updatedTasks
+    }));
   };
 
   const editTask = (indexToEdit) => {
-    const updatedTasks = tasks.map((task, i) =>
+    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
       i === indexToEdit ? { ...task, isEditing: true } : task
     );
-    setTasks(updatedTasks);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: updatedTasks
+    }));
   };
 
   const saveTask = (index, newText) => {
-    const updatedTasks = tasks.map((task, i) =>
+    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
       i === index ? { ...task, text: newText, isEditing: false } : task
     );
-    setTasks(updatedTasks);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: updatedTasks
+    }));
   };
 
   const cancelEdit = (index) => {
-    const updatedTasks = tasks.map((task, i) =>
+    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
       i === index ? { ...task, isEditing: false } : task
     );
-    setTasks(updatedTasks);
+    setWorkspaceTasks(prev => ({
+      ...prev,
+      [activeWorkspace]: updatedTasks
+    }));
   };
 
   const sortTasks = (tasks) => {
@@ -90,10 +116,11 @@ function App() {
               <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
                 Toggle Theme
               </button>
+              <WorkspaceTabs activeWorkspace={activeWorkspace} setActiveWorkspace={setActiveWorkspace} />
               <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
               <TaskInput onAddTask={addTask} />
               <TaskList
-                tasks={sortTasks(tasks)}
+                tasks={sortTasks(workspaceTasks[activeWorkspace])}
                 onDeleteTask={deleteTask}
                 onToggleComplete={toggleComplete}
                 onEditTask={editTask}
