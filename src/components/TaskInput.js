@@ -30,13 +30,28 @@ const TaskInput = ({ onAddTask }) => {
         placeholder="Enter a task..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px' }}
+        style={{
+          padding: '10px 14px',
+          fontSize: '16px',
+          border: '1px solid #ccc',
+          borderRadius: '10px',
+          flex: 1,
+          backgroundColor: '#f9f9f9',
+          transition: 'all 0.3s ease'
+        }}
       />
 
       <select
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px' }}
+        style={{
+          padding: '10px 14px',
+          fontSize: '16px',
+          borderRadius: '10px',
+          border: '1px solid #ccc',
+          backgroundColor: '#f9f9f9',
+          transition: 'all 0.3s ease'
+        }}
       >
         <option value="high">High 🔴</option>
         <option value="medium">Medium 🟡</option>
@@ -47,10 +62,27 @@ const TaskInput = ({ onAddTask }) => {
         type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
-        style={{ padding: '8px', fontSize: '16px' }}
+        style={{
+          padding: '10px 14px',
+          fontSize: '16px',
+          borderRadius: '10px',
+          border: '1px solid #ccc',
+          backgroundColor: '#f9f9f9',
+          transition: 'all 0.3s ease'
+        }}
       />
 
-      <button onClick={handleAddTask} style={{ padding: '8px 16px', fontSize: '16px' }}>
+      <button onClick={handleAddTask} style={{
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#1a73e8',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '10px',
+          cursor: 'pointer',
+          fontWeight: '600',
+          transition: 'background 0.3s ease'
+        }}>
         Add Task
       </button>
     </div>
