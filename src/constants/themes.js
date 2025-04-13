@@ -27,3 +27,11 @@ export const CATEGORY_COLORS = {
   study: '#1abc9c',     // Teal
   other: '#95a5a6'      // Gray
 };
+
+export const CATEGORY_ICONS = {
+  work: '💼',
+  personal: '🏠',
+  health: '💪',
+  study: '🎓',
+  other: '🗂️'
+};
