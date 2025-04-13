@@ -101,7 +101,7 @@ const PomodoroTimer = ({ task, onClose }) => {
         <div style={{
           height: "100%",
           width: `${progressPercent}%`,
-          backgroundColor: "#27ae60",
+          backgroundColor: progressPercent < 50 ? "#f39c12" : progressPercent < 90 ? "#f1c40f" : "#2ecc71",
           transition: "width 0.3s ease"
         }} />
       </div>
