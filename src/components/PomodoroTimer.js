@@ -157,7 +157,7 @@ const PomodoroTimer = ({ task, onClose }) => {
         marginTop: "12px",
         textAlign: "center"
       }}>
-        Tip: Press <strong>Esc</strong> to quickly close Pomodoro.
+        Tip: Press <strong>Esc</strong> to quickly close Pomodoro. Use <strong>Space</strong> to pause or start.
       </p>
     </div>
   );
