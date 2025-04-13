@@ -57,7 +57,7 @@ const PomodoroTimer = ({ task, onClose }) => {
       opacity: 0.98,
       border: "1px solid #e0e0e0"
     }}>
-      <h3>🍅 Pomodoro Mode</h3>
+      <h3>🍅 Pomodoro Focus Mode</h3>
       <p><strong>Task:</strong> {task.text}</p>
       
       // --- Timer Display ---
