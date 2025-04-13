@@ -54,7 +54,8 @@ const PomodoroTimer = ({ task, onClose }) => {
       zIndex: 1000,
       boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
       transition: "transform 0.3s ease, opacity 0.3s ease",
-      opacity: 1
+      opacity: 0.98,
+      border: "1px solid #e0e0e0"
     }}>
       <h3>🍅 Pomodoro Mode</h3>
       <p><strong>Task:</strong> {task.text}</p>
