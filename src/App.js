@@ -171,7 +171,10 @@ function App() {
                   <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
                     Toggle Theme
                   </button>
-                  <WorkspaceTabs activeWorkspace={activeWorkspace} setActiveWorkspace={setActiveWorkspace} />
+                  <WorkspaceTabs
+                    activeWorkspace={activeWorkspace}
+                    setActiveWorkspace={setActiveWorkspace}
+                  />
                   <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
                 </>
               )}
