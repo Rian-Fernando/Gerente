@@ -61,7 +61,13 @@ const PomodoroTimer = ({ task, onClose }) => {
       <p><strong>Task:</strong> {task.text}</p>
       
       // --- Timer Display ---
-      <h1 style={{ fontSize: "48px", margin: "20px 0" }}>{formatTime(secondsLeft)}</h1>
+      <h1
+        style={{ fontSize: "48px", margin: "20px 0" }}
+        aria-live="polite"
+        aria-label={`Time left: ${formatTime(secondsLeft)}`}
+      >
+        {formatTime(secondsLeft)}
+      </h1>
       
       // --- Progress Bar ---
       <div style={{
