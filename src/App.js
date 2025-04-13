@@ -1,215 +1,151 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import './styles/AppContainer.css';
-import TaskList from './components/TaskList';
 import TaskInput from './components/TaskInput';
-import SortTasks from './components/sort/SortTasks';
-import WorkspaceTabs from './components/workspace/WorkspaceTabs';
-import SummaryDashboard from './components/summary/SummaryDashboard';
-import { APP_VERSION, APP_YEAR } from './constants/appInfo';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NotFound from './pages/NotFound';
+import TaskList from './components/TaskList';
 import PomodoroTimer from './components/PomodoroTimer';
+import './styles/AppContainer.css';
+import { CATEGORY_ICONS, PRIORITY_COLORS } from './constants/themes';
+import { formatDate } from './helpers/formatDate';
 
-function App() {
-  const [workspaceTasks, setWorkspaceTasks] = useState({
-    Personal: [],
-    Work: [],
-    School: [],
-    Fitness: [],
-    Other: []
-  });
-  const [activeWorkspace, setActiveWorkspace] = useState("Personal");
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
-  });
-  const [sortMethod, setSortMethod] = useState("none");
-  const [focusMode, setFocusMode] = useState(false);
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [workspace, setWorkspace] = useState('personal');
+  const [sortOption, setSortOption] = useState('default');
+  const [darkMode, setDarkMode] = useState(false);
   const [pomodoroTask, setPomodoroTask] = useState(null);
 
-  useEffect(() => {
-    const storedTasks = localStorage.getItem("workspaceTasks");
-    if (storedTasks) {
-      setWorkspaceTasks(JSON.parse(storedTasks));
-    }
-  }, []);
+  // Get today’s date string
+  const today = new Date().toISOString().split('T')[0];
 
-  useEffect(() => {
-    document.body.className = theme;
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  // Filter today’s completed tasks
+  const tasksToday = tasks.filter(t => t.completed && t.completedDate === today);
 
-  useEffect(() => {
-    localStorage.setItem("workspaceTasks", JSON.stringify(workspaceTasks));
-  }, [workspaceTasks]);
+  // Calculate average time for completed tasks
+  const avgCompletionTime = tasksToday.length
+    ? Math.floor(tasksToday.reduce((sum, t) => sum + (t.timeTaken || 0), 0) / tasksToday.length)
+    : 0;
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
-
-  const addTask = (text, priority = 'medium', dueDate = '') => {
+  // Add new task
+  const addTask = (text, priority, category, dueDate) => {
     const newTask = {
       text,
       completed: false,
       isEditing: false,
       priority,
+      category,
       dueDate,
-      createdAt: new Date().toISOString(),
-      completedAt: null
+      createdDate: today,
+      timeTaken: 0,
     };
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: [...prev[activeWorkspace], newTask]
-    }));
-  };
-
-  const deleteTask = (indexToDelete) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].filter((_, index) => index !== indexToDelete);
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: updatedTasks
-    }));
+    setTasks([...tasks, newTask]);
   };
 
   const toggleComplete = (index) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) => {
-      if (i === index) {
-        const isCompleted = !task.completed;
-        return {
-          ...task,
-          completed: isCompleted,
-          completedAt: isCompleted ? new Date().toISOString() : null
-        };
-      }
-      return task;
-    });
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: updatedTasks
-    }));
+    const newTasks = [...tasks];
+    const task = newTasks[index];
+    task.completed = !task.completed;
+    task.completedDate = task.completed ? today : null;
+    task.timeTaken = task.completed ? Math.floor(Math.random() * 21) + 5 : 0; // Simulated
+    setTasks(newTasks);
   };
 
-  const editTask = (indexToEdit) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
-      i === indexToEdit ? { ...task, isEditing: true } : task
-    );
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: updatedTasks
-    }));
+  const deleteTask = (index) => {
+    const newTasks = tasks.filter((_, i) => i !== index);
+    setTasks(newTasks);
+  };
+
+  const editTask = (index) => {
+    const newTasks = [...tasks];
+    newTasks[index].isEditing = true;
+    setTasks(newTasks);
   };
 
   const saveTask = (index, newText) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
-      i === index ? { ...task, text: newText, isEditing: false } : task
-    );
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: updatedTasks
-    }));
+    const newTasks = [...tasks];
+    newTasks[index].text = newText;
+    newTasks[index].isEditing = false;
+    setTasks(newTasks);
   };
 
   const cancelEdit = (index) => {
-    const updatedTasks = workspaceTasks[activeWorkspace].map((task, i) =>
-      i === index ? { ...task, isEditing: false } : task
-    );
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: updatedTasks
-    }));
+    const newTasks = [...tasks];
+    newTasks[index].isEditing = false;
+    setTasks(newTasks);
   };
 
-  const sortTasks = (tasks) => {
-    if (sortMethod === "priority") {
-      const priorityOrder = { high: 1, medium: 2, low: 3 };
-      return [...tasks].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-    } else if (sortMethod === "az") {
-      return [...tasks].sort((a, b) => a.text.localeCompare(b.text));
-    } else if (sortMethod === "completed") {
-      return [...tasks].sort((a, b) => a.completed - b.completed);
-    }
-    return tasks;
+  const handleWorkspaceChange = (category) => {
+    setWorkspace(category);
   };
 
-  const reorderTasks = (newOrder) => {
-    setWorkspaceTasks(prev => ({
-      ...prev,
-      [activeWorkspace]: newOrder
-    }));
-  };
+  const filteredTasks = tasks
+    .filter(task => task.category === workspace)
+    .sort((a, b) => {
+      if (sortOption === 'priority') {
+        const priorityMap = { high: 3, medium: 2, low: 1 };
+        return priorityMap[b.priority] - priorityMap[a.priority];
+      } else if (sortOption === 'completed') {
+        return a.completed - b.completed;
+      } else if (sortOption === 'az') {
+        return a.text.localeCompare(b.text);
+      }
+      return 0;
+    });
 
   return (
-    <Router>
-      <div className="app-container">
-        <Routes>
-          <Route path="/" element={
-            <header className="App-header">
-              <h1 style={{
-                fontSize: "2.8rem",
-                fontWeight: 600,
-                marginBottom: "1rem",
-                color: "#1a1a1a",
-                textAlign: "center",
-                background: "linear-gradient(90deg, #111, #444)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                letterSpacing: "0.5px"
-              }}>
-                Gerente – Task Manager
-              </h1>
-              {!focusMode && (
-                <SummaryDashboard
-                  tasks={workspaceTasks[activeWorkspace]}
-                  activeWorkspace={activeWorkspace}
-                />
-              )}
-              <button onClick={() => setFocusMode(prev => !prev)} style={{ marginBottom: '1rem' }}>
-                {focusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
-              </button>
-              {!focusMode && (
-                <>
-                  <button onClick={toggleTheme} style={{ marginBottom: '1rem' }}>
-                    Toggle Theme
-                  </button>
-                  <WorkspaceTabs
-                    activeWorkspace={activeWorkspace}
-                    setActiveWorkspace={setActiveWorkspace}
-                  />
-                  <SortTasks sortMethod={sortMethod} onChangeSort={setSortMethod} />
-                </>
-              )}
-              <TaskInput onAddTask={addTask} />
-              <TaskList
-                tasks={sortTasks(workspaceTasks[activeWorkspace])}
-                onDeleteTask={deleteTask}
-                onToggleComplete={toggleComplete}
-                onEditTask={editTask}
-                onSaveTask={saveTask}
-                onCancelEdit={cancelEdit}
-                onReorderTasks={reorderTasks}
-                onStartPomodoro={(task) => setPomodoroTask(task)}
-              />
-            </header>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        {pomodoroTask && (
-          <PomodoroTimer
-            task={pomodoroTask}
-            onClose={() => setPomodoroTask(null)}
-          />
-        )}
-        <footer style={{
-          textAlign: "center",
-          fontSize: "14px",
-          color: "#888",
-          marginTop: "30px"
-        }}>
-          Gerente {APP_VERSION} © {APP_YEAR}
-        </footer>
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
+      <h1>Gerente – Task Manager</h1>
+
+      <div className="stats-bar">
+        <div className="stat-card">📋 Workspace: <strong>{workspace.charAt(0).toUpperCase() + workspace.slice(1)}</strong></div>
+        <div className="stat-card">✅ Tasks Today: <strong>{tasksToday.length}</strong></div>
+        <div className="stat-card">⏱️ Avg Time: <strong>{avgCompletionTime} mins</strong></div>
       </div>
-    </Router>
+
+      <div className="mode-switch">
+        <button onClick={() => alert("Focus mode coming soon!")}>Enter Focus Mode</button>
+        <button onClick={() => setDarkMode(!darkMode)}>Toggle Theme</button>
+      </div>
+
+      <div className="category-switcher">
+        {Object.keys(CATEGORY_ICONS).map((key) => (
+          <button
+            key={key}
+            className={workspace === key ? 'active' : ''}
+            onClick={() => handleWorkspaceChange(key)}
+          >
+            {CATEGORY_ICONS[key]} {key.charAt(0).toUpperCase() + key.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <div className="sort-select">
+        <label>Sort tasks by:</label>
+        <select onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
+          <option value="default">Default</option>
+          <option value="priority">Priority</option>
+          <option value="completed">Completion</option>
+          <option value="az">A-Z</option>
+        </select>
+      </div>
+
+      <TaskInput addTask={addTask} />
+
+      <TaskList
+        tasks={filteredTasks}
+        onDeleteTask={deleteTask}
+        onToggleComplete={toggleComplete}
+        onEditTask={editTask}
+        onSaveTask={saveTask}
+        onCancelEdit={cancelEdit}
+        onStartPomodoro={setPomodoroTask}
+      />
+
+      <PomodoroTimer task={pomodoroTask} onClose={() => setPomodoroTask(null)} />
+
+      <footer style={{ fontSize: "14px", marginTop: "20px", color: "#888" }}>
+        Gerente v1.0.0 © 2025
+      </footer>
+    </div>
   );
-}
+};
 
 export default App;
