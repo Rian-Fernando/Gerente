@@ -50,13 +50,19 @@ const PomodoroTimer = ({ task, onClose }) => {
       background: "#fff",
       border: "2px solid #f39c12",
       borderRadius: "8px",
-      padding: "20px",
+      padding: "24px",
       zIndex: 1000,
-      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)"
+      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+      transition: "transform 0.3s ease, opacity 0.3s ease",
+      opacity: 1
     }}>
       <h3>🍅 Pomodoro Mode</h3>
       <p><strong>Task:</strong> {task.text}</p>
+      
+      // --- Timer Display ---
       <h1 style={{ fontSize: "48px", margin: "20px 0" }}>{formatTime(secondsLeft)}</h1>
+      
+      // --- Progress Bar ---
       <div style={{
         marginBottom: "10px",
         fontSize: "14px",
@@ -67,6 +73,7 @@ const PomodoroTimer = ({ task, onClose }) => {
         Progress: {percentDisplay}%
       </div>
       {secondsLeft === 0 && (
+        // --- Completion Badge ---
         <div style={{
           backgroundColor: "#2ecc71",
           color: "#fff",
@@ -80,6 +87,8 @@ const PomodoroTimer = ({ task, onClose }) => {
           ✅ Pomodoro complete! Take a short break ☕
         </div>
       )}
+      
+      // --- Progress Bar ---
       <div style={{
         height: "10px",
         width: "100%",
@@ -95,7 +104,9 @@ const PomodoroTimer = ({ task, onClose }) => {
           transition: "width 0.3s ease"
         }} />
       </div>
-      <button onClick={() => setIsActive(!isActive)} style={{
+      
+      // --- Control Buttons ---
+      <button onClick={() => setIsActive(!isActive)} aria-label={isActive ? "Pause Pomodoro" : "Start Pomodoro"} style={{
         background: isActive ? "#e74c3c" : "#2ecc71",
         border: "none",
         padding: "8px 16px",
@@ -110,7 +121,7 @@ const PomodoroTimer = ({ task, onClose }) => {
       <button onClick={() => {
         setSecondsLeft(1500);
         setIsActive(false);
-      }} style={{
+      }} aria-label="Reset Pomodoro" style={{
         background: "#3498db",
         border: "none",
         padding: "8px 16px",
@@ -122,7 +133,7 @@ const PomodoroTimer = ({ task, onClose }) => {
       }}>
         Reset
       </button>
-      <button onClick={onClose} style={{
+      <button onClick={onClose} aria-label="Close Pomodoro Timer" style={{
         background: "#f39c12",
         border: "none",
         padding: "8px 16px",
@@ -133,6 +144,14 @@ const PomodoroTimer = ({ task, onClose }) => {
       }}>
         Close
       </button>
+      <p style={{
+        fontSize: "12px",
+        color: "#888",
+        marginTop: "12px",
+        textAlign: "center"
+      }}>
+        Tip: Press <strong>Esc</strong> to quickly close Pomodoro.
+      </p>
     </div>
   );
 };
