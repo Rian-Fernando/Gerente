@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const PomodoroTimer = ({ task, onClose }) => {
+  if (!task) return null;
+
   const [secondsLeft, setSecondsLeft] = useState(1500); // 25 minutes
 
   useEffect(() => {
