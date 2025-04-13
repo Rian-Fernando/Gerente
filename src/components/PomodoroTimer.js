@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const PomodoroTimer = ({ task, onClose }) => {
+  const alertSound = new Audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3");
   const [secondsLeft, setSecondsLeft] = useState(1500); // 25 minutes
   const [isActive, setIsActive] = useState(false);
 
@@ -8,7 +9,12 @@ const PomodoroTimer = ({ task, onClose }) => {
     if (!isActive) return;
 
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      setSecondsLeft((prev) => {
+        if (prev === 1) {
+          alertSound.play();
+        }
+        return prev > 0 ? prev - 1 : 0;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -20,9 +26,20 @@ const PomodoroTimer = ({ task, onClose }) => {
     return `${minutes}:${seconds}`;
   };
 
+  useEffect(() => {
+    if (task) {
+      document.title = `${formatTime(secondsLeft)} • ${task.text}`;
+    }
+
+    return () => {
+      document.title = "Gerente - Task Manager App";
+    };
+  }, [secondsLeft, task]);
+
   if (!task) return null;
 
   const progressPercent = ((1500 - secondsLeft) / 1500) * 100;
+  const percentDisplay = Math.round(progressPercent);
 
   return (
     <div style={{
@@ -40,6 +57,29 @@ const PomodoroTimer = ({ task, onClose }) => {
       <h3>🍅 Pomodoro Mode</h3>
       <p><strong>Task:</strong> {task.text}</p>
       <h1 style={{ fontSize: "48px", margin: "20px 0" }}>{formatTime(secondsLeft)}</h1>
+      <div style={{
+        marginBottom: "10px",
+        fontSize: "14px",
+        fontWeight: "bold",
+        color: "#555",
+        textAlign: "center"
+      }}>
+        Progress: {percentDisplay}%
+      </div>
+      {secondsLeft === 0 && (
+        <div style={{
+          backgroundColor: "#2ecc71",
+          color: "#fff",
+          padding: "10px",
+          borderRadius: "6px",
+          fontWeight: "bold",
+          marginBottom: "10px",
+          textAlign: "center",
+          boxShadow: "0px 2px 6px rgba(0,0,0,0.1)"
+        }}>
+          ✅ Pomodoro complete! Take a short break ☕
+        </div>
+      )}
       <div style={{
         height: "10px",
         width: "100%",
