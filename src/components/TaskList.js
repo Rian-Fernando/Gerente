@@ -292,6 +292,11 @@ const TaskList = ({
                           Completed in {Math.round((new Date(task.completedAt) - new Date(task.createdAt)) / 60000)} minutes
                         </div>
                       )}
+                      {task.completed && task.completedAt && (
+                        <div style={{ fontSize: "12px", color: "#aaa", fontStyle: "italic", marginTop: "2px" }}>
+                          Last updated: {formatDate(task.completedAt)}
+                        </div>
+                      )}
                       {task.completed && task.createdAt && (
                         <div style={{ fontSize: "12px", color: "#888", marginTop: "2px" }}>
                           Created on: {formatDate(task.createdAt)}
