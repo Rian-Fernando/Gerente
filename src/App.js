@@ -5,6 +5,7 @@ import PomodoroTimer from './components/PomodoroTimer';
 import './styles/AppContainer.css';
 import { CATEGORY_ICONS, PRIORITY_COLORS } from './constants/themes';
 import { formatDate } from './helpers/formatDate';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -91,60 +92,68 @@ const App = () => {
     });
 
   return (
-    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
-      <h1>Gerente – Task Manager</h1>
+    <Router>
+      <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <h1>Gerente – Task Manager</h1>
 
-      <div className="stats-bar">
-        <div className="stat-card">📋 Workspace: <strong>{workspace.charAt(0).toUpperCase() + workspace.slice(1)}</strong></div>
-        <div className="stat-card">✅ Tasks Today: <strong>{tasksToday.length}</strong></div>
-        <div className="stat-card">⏱️ Avg Time: <strong>{avgCompletionTime} mins</strong></div>
+              <div className="stats-bar">
+                <div className="stat-card">📋 Workspace: <strong>{workspace.charAt(0).toUpperCase() + workspace.slice(1)}</strong></div>
+                <div className="stat-card">✅ Tasks Today: <strong>{tasksToday.length}</strong></div>
+                <div className="stat-card">⏱️ Avg Time: <strong>{avgCompletionTime} mins</strong></div>
+              </div>
+
+              <div className="mode-switch">
+                <button onClick={() => alert("Focus mode coming soon!")}>Enter Focus Mode</button>
+                <button onClick={() => setDarkMode(!darkMode)}>Toggle Theme</button>
+              </div>
+
+              <div className="category-switcher">
+                {Object.keys(CATEGORY_ICONS).map((key) => (
+                  <button
+                    key={key}
+                    className={workspace === key ? 'active' : ''}
+                    onClick={() => handleWorkspaceChange(key)}
+                  >
+                    {CATEGORY_ICONS[key]} {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </button>
+                ))}
+              </div>
+
+              <div className="sort-select">
+                <label>Sort tasks by:</label>
+                <select onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
+                  <option value="default">Default</option>
+                  <option value="priority">Priority</option>
+                  <option value="completed">Completion</option>
+                  <option value="az">A-Z</option>
+                </select>
+              </div>
+
+              <TaskInput addTask={addTask} />
+
+              <TaskList
+                tasks={filteredTasks}
+                onDeleteTask={deleteTask}
+                onToggleComplete={toggleComplete}
+                onEditTask={editTask}
+                onSaveTask={saveTask}
+                onCancelEdit={cancelEdit}
+                onStartPomodoro={setPomodoroTask}
+              />
+
+              <PomodoroTimer task={pomodoroTask} onClose={() => setPomodoroTask(null)} />
+
+              <footer style={{ fontSize: "14px", marginTop: "20px", color: "#888" }}>
+                Gerente v1.0.0 © 2025
+              </footer>
+            </>
+          } />
+        </Routes>
       </div>
-
-      <div className="mode-switch">
-        <button onClick={() => alert("Focus mode coming soon!")}>Enter Focus Mode</button>
-        <button onClick={() => setDarkMode(!darkMode)}>Toggle Theme</button>
-      </div>
-
-      <div className="category-switcher">
-        {Object.keys(CATEGORY_ICONS).map((key) => (
-          <button
-            key={key}
-            className={workspace === key ? 'active' : ''}
-            onClick={() => handleWorkspaceChange(key)}
-          >
-            {CATEGORY_ICONS[key]} {key.charAt(0).toUpperCase() + key.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      <div className="sort-select">
-        <label>Sort tasks by:</label>
-        <select onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
-          <option value="default">Default</option>
-          <option value="priority">Priority</option>
-          <option value="completed">Completion</option>
-          <option value="az">A-Z</option>
-        </select>
-      </div>
-
-      <TaskInput addTask={addTask} />
-
-      <TaskList
-        tasks={filteredTasks}
-        onDeleteTask={deleteTask}
-        onToggleComplete={toggleComplete}
-        onEditTask={editTask}
-        onSaveTask={saveTask}
-        onCancelEdit={cancelEdit}
-        onStartPomodoro={setPomodoroTask}
-      />
-
-      <PomodoroTimer task={pomodoroTask} onClose={() => setPomodoroTask(null)} />
-
-      <footer style={{ fontSize: "14px", marginTop: "20px", color: "#888" }}>
-        Gerente v1.0.0 © 2025
-      </footer>
-    </div>
+    </Router>
   );
 };
 
