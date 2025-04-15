@@ -28,7 +28,7 @@ const TaskInput = ({ onAddTask }) => {
     >
       <input
         type="text"
-        placeholder="Enter a task..."
+        placeholder="What do you need to get done today?"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => {
@@ -50,6 +50,7 @@ const TaskInput = ({ onAddTask }) => {
       <select
         value={priority}
         onChange={(e) => setPriority(e.target.value)}
+        aria-label="Select task priority"
         style={{
           padding: '10px 14px',
           fontSize: '16px',
@@ -68,6 +69,7 @@ const TaskInput = ({ onAddTask }) => {
         type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
+        aria-label="Set task due date"
         style={{
           padding: '10px 14px',
           fontSize: '16px',
