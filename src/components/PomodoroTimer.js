@@ -42,7 +42,7 @@ const PomodoroTimer = ({ task, onClose }) => {
   const percentDisplay = Math.round(progressPercent);
 
   return (
-    <div style={{
+    <div role="dialog" aria-modal="true" style={{
       position: "fixed",
       top: "20%",
       left: "50%",
@@ -60,7 +60,7 @@ const PomodoroTimer = ({ task, onClose }) => {
       <h3>🍅 Pomodoro Focus Mode</h3>
       <p><strong>Task:</strong> {task.text}</p>
       
-      // --- Timer Display ---
+      {/* --- Timer Display --- */}
       <h1
         style={{ fontSize: "48px", margin: "20px 0" }}
         aria-live="polite"
@@ -69,7 +69,7 @@ const PomodoroTimer = ({ task, onClose }) => {
         {formatTime(secondsLeft)}
       </h1>
       
-      // --- Progress Bar ---
+      {/* --- Progress Bar --- */}
       <div style={{
         marginBottom: "10px",
         fontSize: "14px",
@@ -80,22 +80,23 @@ const PomodoroTimer = ({ task, onClose }) => {
         Progress: {percentDisplay}%
       </div>
       {secondsLeft === 0 && (
-        // --- Completion Badge ---
-        <div style={{
-          backgroundColor: "#2ecc71",
-          color: "#fff",
-          padding: "10px",
-          borderRadius: "6px",
-          fontWeight: "bold",
-          marginBottom: "10px",
-          textAlign: "center",
-          boxShadow: "0px 2px 6px rgba(0,0,0,0.1)"
-        }}>
+        <div
+          style={{
+            backgroundColor: "#2ecc71",
+            color: "#fff",
+            padding: "10px",
+            borderRadius: "6px",
+            fontWeight: "bold",
+            marginBottom: "10px",
+            textAlign: "center",
+            boxShadow: "0px 2px 6px rgba(0,0,0,0.1)"
+          }}
+        >
           ✅ Pomodoro complete! Take a short break ☕
         </div>
       )}
       
-      // --- Progress Bar ---
+      {/* --- Progress Bar --- */}
       <div style={{
         height: "10px",
         width: "100%",
@@ -112,7 +113,7 @@ const PomodoroTimer = ({ task, onClose }) => {
         }} />
       </div>
       
-      // --- Control Buttons ---
+      {/* --- Control Buttons --- */}
       <button onClick={() => setIsActive(!isActive)} aria-label={isActive ? "Pause Pomodoro" : "Start Pomodoro"} style={{
         background: isActive ? "#e74c3c" : "#2ecc71",
         border: "none",
