@@ -1,22 +1,24 @@
-// Component: SortTasks.js
-// UI dropdown to select sort method for tasks
-
 import React from 'react';
+import { SORT_OPTIONS } from '../../features/taskSorting';
+import './SortTasks.css';
 
 const SortTasks = ({ sortMethod, onChangeSort }) => {
   return (
-    <div style={{ marginBottom: "15px" }}>
-      <label htmlFor="sort" style={{ fontWeight: "bold" }}>Sort tasks by: </label>
+    <div className="sort-tasks">
+      <label htmlFor="sort-select" className="sort-tasks-label">
+        Sort by:
+      </label>
       <select
-        id="sort"
+        id="sort-select"
         value={sortMethod}
         onChange={(e) => onChangeSort(e.target.value)}
-        style={{ padding: "4px 8px", borderRadius: "5px", marginLeft: "8px" }}
+        className="sort-tasks-select"
       >
-        <option value="none">Default</option>
-        <option value="priority">Priority</option>
-        <option value="az">A-Z</option>
-        <option value="completed">Completed status</option>
+        {SORT_OPTIONS.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </select>
     </div>
   );
