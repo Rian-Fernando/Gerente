@@ -6,23 +6,31 @@
 }
 
 .sort-tasks-label {
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--text-secondary, #555);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-secondary, #6e6e73);
+  letter-spacing: -0.005em;
 }
 
 .sort-tasks-select {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color, #ccc);
-  background: var(--input-bg, #fff);
-  color: var(--text-primary, #222);
-  font-size: 14px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill, 999px);
+  border: 1px solid transparent;
+  background: var(--tab-bg, rgba(118, 118, 128, 0.08));
+  color: var(--text-primary, #1d1d1f);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.sort-tasks-select:hover {
+  background: var(--tab-hover-bg, rgba(118, 118, 128, 0.14));
 }
 
 .sort-tasks-select:focus {
   outline: none;
-  border-color: var(--accent, #1a73e8);
+  border-color: var(--accent, #0071e3);
+  box-shadow: 0 0 0 4px var(--accent-soft, rgba(0, 113, 227, 0.12));
 }

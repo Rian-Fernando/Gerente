@@ -1,43 +1,47 @@
 .summary-dashboard {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 22px;
 }
 
 .summary-card {
   flex: 1;
   min-width: 140px;
-  padding: 12px 16px;
-  background: var(--surface, #f8f9fa);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: 10px;
+  padding: 14px 16px;
+  background: var(--stat-bg, rgba(118, 118, 128, 0.06));
+  border: 1px solid var(--border-color, rgba(60, 60, 67, 0.12));
+  border-radius: var(--radius-md, 14px);
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  transition: transform 0.15s ease;
+  gap: 6px;
+  transition: transform 0.15s ease, border-color 0.2s ease;
 }
 
 .summary-card:hover {
   transform: translateY(-1px);
+  border-color: var(--border-strong, rgba(60, 60, 67, 0.2));
 }
 
 .summary-card-alert {
-  background: var(--alert-bg, #fdecea);
-  border-color: var(--alert-border, #e74c3c);
+  background: var(--alert-bg, rgba(255, 59, 48, 0.12));
+  border-color: var(--alert-border, rgba(255, 59, 48, 0.4));
 }
 
 .summary-label {
-  font-size: 12px;
-  color: var(--text-secondary, #666);
+  font-size: 11px;
+  color: var(--text-secondary, #6e6e73);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
 .summary-value {
-  font-size: 18px;
-  color: var(--text-primary, #222);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary, #1d1d1f);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 600px) {
