@@ -1,33 +1,33 @@
 export const LIGHT_THEME = {
-    background: "#f5f5f5",
-    text: "#222"
-  };
+  background: '#F4F1EC',
+  text: '#111114',
+};
 
 export const DARK_THEME = {
-    background: "#1e1e1e",
-    text: "#f1f1f1"
-  };
+  background: '#111114',
+  text: '#F4F1EC',
+};
 
-// Priority Dot Colors
 export const PRIORITY_COLORS = {
-  high: '#e63946',
-  medium: '#f1c40f',
-  low: '#2ecc71'
+  high: '#E25A3C',
+  medium: '#C68A3A',
+  low: '#5C8A6B',
 };
 
-// Category Colors
 export const CATEGORY_COLORS = {
-  personal: '#9b59b6',
-  work: '#3498db',
-  school: '#1abc9c',
-  fitness: '#e67e22',
-  other: '#95a5a6'
+  personal: '#7A6CCF',
+  work: '#3E6FB8',
+  school: '#2F8A86',
+  fitness: '#C9683A',
+  other: '#86868B',
 };
 
-export const CATEGORY_ICONS = {
-  personal: '🏠',
-  work: '💼',
-  school: '🎓',
-  fitness: '💪',
-  other: '🗂️'
+export const CATEGORY_LABELS = {
+  personal: 'Personal',
+  work: 'Work',
+  school: 'School',
+  fitness: 'Fitness',
+  other: 'Other',
 };
+
+export const CATEGORY_KEYS = Object.keys(CATEGORY_LABELS);

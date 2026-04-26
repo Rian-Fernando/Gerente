@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CATEGORY_ICONS } from '../constants/themes';
+import { CATEGORY_LABELS } from '../constants/themes';
 import './TaskInput.css';
 
 const TaskInput = ({ onAddTask, defaultCategory = 'personal' }) => {
@@ -38,9 +38,9 @@ const TaskInput = ({ onAddTask, defaultCategory = 'personal' }) => {
         aria-label="Select task priority"
         className="task-input-select"
       >
-        <option value="high">High 🔴</option>
-        <option value="medium">Medium 🟡</option>
-        <option value="low">Low 🟢</option>
+        <option value="high">High priority</option>
+        <option value="medium">Medium priority</option>
+        <option value="low">Low priority</option>
       </select>
 
       <select
@@ -49,9 +49,9 @@ const TaskInput = ({ onAddTask, defaultCategory = 'personal' }) => {
         aria-label="Select task category"
         className="task-input-select"
       >
-        {Object.entries(CATEGORY_ICONS).map(([key, icon]) => (
+        {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
           <option key={key} value={key}>
-            {icon} {key.charAt(0).toUpperCase() + key.slice(1)}
+            {label}
           </option>
         ))}
       </select>

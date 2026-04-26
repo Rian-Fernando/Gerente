@@ -101,7 +101,7 @@ const PomodoroTimer = ({ task, onClose, onComplete }) => {
         aria-label="Pomodoro Timer"
       >
         <h3>
-          {mode === 'work' ? '🍅 Focus Mode' : '☕ Break Time'}
+          {mode === 'work' ? 'Focus mode' : 'Break time'}
         </h3>
         <p className="pomodoro-task">
           <strong>Task:</strong> {task.text}
@@ -120,8 +120,8 @@ const PomodoroTimer = ({ task, onClose, onComplete }) => {
         {secondsLeft === 0 && (
           <div className="pomodoro-complete">
             {mode === 'work'
-              ? '✅ Session complete! Time for a break ☕'
-              : '✅ Break finished! Ready for another focus session?'}
+              ? 'Session complete. Time for a break.'
+              : 'Break finished. Ready for another focus session?'}
           </div>
         )}
 
@@ -158,7 +158,7 @@ const PomodoroTimer = ({ task, onClose, onComplete }) => {
             className="pomodoro-btn-secondary"
             aria-label={muted ? 'Unmute alerts' : 'Mute alerts'}
           >
-            {muted ? '🔇 Muted' : '🔔 Sound'}
+            {muted ? 'Muted' : 'Sound on'}
           </button>
           <button
             type="button"

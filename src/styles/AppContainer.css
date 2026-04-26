@@ -1,19 +1,25 @@
 :root {
-  --bg-page: #f5f5f7;
-  --surface: rgba(255, 255, 255, 0.72);
+  --brand-ink: #111114;
+  --brand-paper: #F4F1EC;
+  --brand-accent: #E25A3C;
+  --brand-accent-soft: rgba(226, 90, 60, 0.14);
+  --brand-accent-hover: #d24a30;
+
+  --bg-page: var(--brand-paper);
+  --surface: rgba(255, 255, 255, 0.78);
   --surface-solid: #ffffff;
   --surface-muted: rgba(255, 255, 255, 0.55);
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
+  --text-primary: var(--brand-ink);
+  --text-secondary: #5b5b62;
   --text-tertiary: #86868b;
-  --border-color: rgba(60, 60, 67, 0.12);
-  --border-strong: rgba(60, 60, 67, 0.2);
-  --input-bg: rgba(118, 118, 128, 0.08);
-  --input-bg-focus: rgba(255, 255, 255, 0.9);
-  --hover-bg: rgba(60, 60, 67, 0.06);
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --accent-soft: rgba(0, 113, 227, 0.12);
+  --border-color: rgba(17, 17, 20, 0.1);
+  --border-strong: rgba(17, 17, 20, 0.18);
+  --input-bg: rgba(17, 17, 20, 0.05);
+  --input-bg-focus: rgba(255, 255, 255, 0.92);
+  --hover-bg: rgba(17, 17, 20, 0.05);
+  --accent: var(--brand-accent);
+  --accent-hover: var(--brand-accent-hover);
+  --accent-soft: var(--brand-accent-soft);
   --tab-bg: rgba(118, 118, 128, 0.08);
   --tab-hover-bg: rgba(118, 118, 128, 0.14);
   --tab-fg: #1d1d1f;
@@ -47,21 +53,21 @@
 }
 
 body.dark {
-  --bg-page: #000000;
-  --surface: rgba(28, 28, 30, 0.72);
+  --bg-page: var(--brand-ink);
+  --surface: rgba(28, 28, 30, 0.74);
   --surface-solid: #1c1c1e;
   --surface-muted: rgba(28, 28, 30, 0.55);
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1a6;
-  --text-tertiary: #6e6e73;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --input-bg: rgba(118, 118, 128, 0.24);
-  --input-bg-focus: rgba(44, 44, 46, 0.9);
-  --hover-bg: rgba(255, 255, 255, 0.06);
-  --accent: #0a84ff;
-  --accent-hover: #409cff;
-  --accent-soft: rgba(10, 132, 255, 0.2);
+  --text-primary: var(--brand-paper);
+  --text-secondary: #a8a8ad;
+  --text-tertiary: #76767b;
+  --border-color: rgba(244, 241, 236, 0.1);
+  --border-strong: rgba(244, 241, 236, 0.18);
+  --input-bg: rgba(244, 241, 236, 0.08);
+  --input-bg-focus: rgba(44, 44, 46, 0.92);
+  --hover-bg: rgba(244, 241, 236, 0.06);
+  --accent: var(--brand-accent);
+  --accent-hover: #ec6d52;
+  --accent-soft: rgba(226, 90, 60, 0.22);
   --tab-bg: rgba(118, 118, 128, 0.2);
   --tab-hover-bg: rgba(118, 118, 128, 0.3);
   --tab-fg: #f5f5f7;
@@ -121,25 +127,26 @@ body {
 
 .app-title {
   margin: 0;
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: -0.028em;
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-primary);
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+.app-brand-lockup {
+  display: inline-flex;
+  align-items: center;
   color: var(--text-primary);
 }
 
-.app-title span[role="img"] {
-  font-size: 28px;
-}
-
 .app-subtitle {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-secondary);
-  letter-spacing: 0.01em;
-  padding: 3px 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
   background: var(--tab-bg);
   border-radius: var(--radius-pill);
 }
@@ -338,11 +345,16 @@ body {
   }
 
   .app-title {
-    font-size: 26px;
+    gap: 10px;
   }
 
-  .app-title span[role="img"] {
-    font-size: 22px;
+  .app-brand-lockup svg {
+    height: 28px !important;
+    width: auto !important;
+  }
+
+  .app-subtitle {
+    display: none;
   }
 
   .toolbar {

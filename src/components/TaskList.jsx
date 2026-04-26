@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { PRIORITY_COLORS, CATEGORY_COLORS, CATEGORY_ICONS } from '../constants/themes';
+import { PRIORITY_COLORS, CATEGORY_COLORS, CATEGORY_LABELS } from '../constants/themes';
 import { formatDate } from '../helpers/formatDate';
 import './TaskList.css';
 
 const getDueStatus = (dueDate, today) => {
   if (!dueDate) return null;
-  if (dueDate < today) return { label: '🔴 Overdue', className: 'due-overdue' };
-  if (dueDate === today) return { label: '🟠 Due Today', className: 'due-today' };
+  if (dueDate < today) return { label: 'Overdue', className: 'due-overdue' };
+  if (dueDate === today) return { label: 'Due today', className: 'due-today' };
   const daysAway = Math.ceil((new Date(dueDate) - new Date(today)) / 86400000);
-  if (daysAway <= 2) return { label: '🟡 Due Soon', className: 'due-soon' };
+  if (daysAway <= 2) return { label: 'Due soon', className: 'due-soon' };
   return { label: '', className: 'due-future' };
 };
+
+const TimerIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="13" r="7" />
+    <path d="M12 9v4l2 2M9 2h6M12 6V2" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M6 6l12 12M18 6L6 18" />
+  </svg>
+);
 
 const TaskList = ({
   tasks,
@@ -34,7 +47,11 @@ const TaskList = ({
   return (
     <div className="task-list-container">
       <div className="task-list-header">
-        <span className="task-list-header-icon">{CATEGORY_ICONS[workspace] || '📋'}</span>
+        <span
+          className="task-list-header-dot"
+          style={{ backgroundColor: CATEGORY_COLORS[workspace] || '#86868B' }}
+          aria-hidden="true"
+        />
         Workspace: {workspaceLabel}
       </div>
 
@@ -55,8 +72,13 @@ const TaskList = ({
 
       {tasks.length === 0 ? (
         <div className="task-empty-state">
-          <div className="task-empty-icon">✨</div>
-          <p className="task-empty-title">All clear in {workspaceLabel}!</p>
+          <div className="task-empty-icon" aria-hidden="true">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <p className="task-empty-title">All clear in {workspaceLabel}.</p>
           <p className="task-empty-subtitle">Add a task above to get started.</p>
         </div>
       ) : (
@@ -138,7 +160,7 @@ const TaskList = ({
                                 className="task-badge"
                                 style={{ backgroundColor: CATEGORY_COLORS[task.category] || '#eee' }}
                               >
-                                {CATEGORY_ICONS[task.category]} {task.category}
+                                {CATEGORY_LABELS[task.category] || task.category}
                               </span>
                             )}
 
@@ -155,7 +177,7 @@ const TaskList = ({
                               aria-label="Start Pomodoro timer"
                               onClick={() => onStartPomodoro(task)}
                             >
-                              🍅
+                              <TimerIcon />
                             </button>
 
                             <button
@@ -165,7 +187,7 @@ const TaskList = ({
                               aria-label={`Delete ${task.text}`}
                               onClick={() => onDeleteTask(task.id)}
                             >
-                              ✖
+                              <CloseIcon />
                             </button>
                           </div>
 

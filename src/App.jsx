@@ -8,14 +8,35 @@ import WorkspaceTabs from './components/workspace/WorkspaceTabs';
 import SortTasks from './components/sort/SortTasks';
 import SummaryDashboard from './components/summary/SummaryDashboard';
 import NotFound from './pages/NotFound';
+import GerenteLogo from './components/brand/GerenteLogo';
 import useTaskManager from './hooks/useTaskManager';
 import useLocalStorage from './hooks/useLocalStorage';
 import useToast from './hooks/useToast';
 import { sortTasks } from './features/taskSorting';
 import { getInitialDarkMode, persistDarkMode, applyDarkModeClass } from './features/darkMode';
-import { CATEGORY_ICONS } from './constants/themes';
+import { CATEGORY_KEYS } from './constants/themes';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
 import './styles/AppContainer.css';
+
+const SunIcon = (props) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+);
+
+const MoonIcon = (props) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
+  </svg>
+);
+
+const KeyboardIcon = (props) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+    <rect x="2.5" y="6" width="19" height="12" rx="2.5" />
+    <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M9 14h6" />
+  </svg>
+);
 
 const TaskManagerPage = () => {
   const {
@@ -63,7 +84,7 @@ const TaskManagerPage = () => {
     (id) => {
       const task = tasks.find((t) => t.id === id);
       toggleComplete(id);
-      if (task && !task.completed) showToast('Task completed ✅', 'success');
+      if (task && !task.completed) showToast('Task completed', 'success');
     },
     [tasks, toggleComplete, showToast]
   );
@@ -88,7 +109,7 @@ const TaskManagerPage = () => {
 
   const taskCounts = useMemo(() => {
     const counts = {};
-    for (const key of Object.keys(CATEGORY_ICONS)) counts[key] = 0;
+    for (const key of CATEGORY_KEYS) counts[key] = 0;
     for (const task of tasks) {
       if (!task.completed && counts[task.category] !== undefined) {
         counts[task.category]++;
@@ -135,7 +156,9 @@ const TaskManagerPage = () => {
     <div className="app-container">
       <header className="app-header">
         <h1 className="app-title">
-          <span role="img" aria-label="clipboard">📋</span> Gerente
+          <span className="app-brand-lockup">
+            <GerenteLogo size={32} variant="lockup" title="Gerente" />
+          </span>
           <span className="app-subtitle">Task Manager</span>
         </h1>
         <div className="app-actions">
@@ -146,7 +169,7 @@ const TaskManagerPage = () => {
             title="Keyboard shortcuts (?)"
             aria-label="Show keyboard shortcuts"
           >
-            ⌨️
+            <KeyboardIcon />
           </button>
           <button
             type="button"
@@ -155,7 +178,7 @@ const TaskManagerPage = () => {
             title="Toggle theme (D)"
             aria-label="Toggle dark mode"
           >
-            {darkMode ? '☀️' : '🌙'}
+            {darkMode ? <SunIcon /> : <MoonIcon />}
           </button>
         </div>
       </header>
@@ -176,7 +199,7 @@ const TaskManagerPage = () => {
           onClick={handleClearCompleted}
           title="Clear completed tasks in this workspace"
         >
-          🗑️ Clear Completed
+          Clear completed
         </button>
       </div>
 
@@ -197,7 +220,7 @@ const TaskManagerPage = () => {
       <PomodoroTimer
         task={pomodoroTask}
         onClose={() => setPomodoroTask(null)}
-        onComplete={(task) => showToast(`Nice work on "${task.text}"! Take a break ☕`, 'success')}
+        onComplete={(task) => showToast(`Nice work on "${task.text}". Take a break.`, 'success')}
       />
 
       <Toast toasts={toasts} onDismiss={dismiss} />

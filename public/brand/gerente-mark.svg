@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Gerente">
+  <title>Gerente</title>
+  <g fill="none" stroke="#111114" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 30 L100 70 L150 30"></path>
+    <path d="M170 50 L130 100 L170 150"></path>
+    <path d="M150 170 L100 130 L50 170"></path>
+    <path d="M30 150 L70 100 L30 50"></path>
+  </g>
+  <circle cx="100" cy="100" r="11" fill="#E25A3C"></circle>
+</svg>

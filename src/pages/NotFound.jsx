@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NotFound = () => (
   <div className="notfound-page" style={{ textAlign: 'center', padding: '60px 20px' }}>
-    <h1 style={{ fontSize: '72px', margin: 0, color: '#e63946' }}>404</h1>
+    <h1 style={{ fontSize: '72px', margin: 0, color: 'var(--brand-accent, #E25A3C)' }}>404</h1>
     <p style={{ fontSize: '20px', color: 'var(--text-secondary, #555)' }}>
       Oops! The page you're looking for doesn't exist.
     </p>

@@ -41,8 +41,13 @@
   transform: scale(0.97);
 }
 
-.workspace-tab-icon {
-  font-size: 14px;
+.workspace-tab-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(17, 17, 20, 0.06);
 }
 
 .workspace-tab-count {
