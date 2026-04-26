@@ -6,22 +6,12 @@ const TOKENS = {
   accent: '#E25A3C',
 };
 
-function Mark({ stroke, dotFill }) {
+function Mark({ fill, accentFill }) {
   return (
     <>
-      <g
-        fill="none"
-        stroke={stroke}
-        strokeWidth={16}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M50 30 L100 70 L150 30" />
-        <path d="M170 50 L130 100 L170 150" />
-        <path d="M150 170 L100 130 L50 170" />
-        <path d="M30 150 L70 100 L30 50" />
-      </g>
-      <circle cx={100} cy={100} r={11} fill={dotFill} />
+      <path d="M40 40 H110 V60 H60 V150 H40 Z" fill={fill} />
+      <path d="M160 160 H90 V140 H140 V50 H160 Z" fill={fill} />
+      <rect x={92} y={92} width={16} height={16} fill={accentFill} />
     </>
   );
 }
@@ -45,7 +35,7 @@ export default function GerenteLogo({
         {...rest}
       >
         <title>{title}</title>
-        <Mark stroke="currentColor" dotFill={TOKENS.accent} />
+        <Mark fill="currentColor" accentFill={TOKENS.accent} />
         <text
           x={240}
           y={135}
@@ -61,13 +51,13 @@ export default function GerenteLogo({
     );
   }
 
-  const stroke =
+  const fill =
     variant === 'mono'        ? 'currentColor' :
     variant === 'mono-accent' ? 'currentColor' :
     variant === 'reverse'     ? TOKENS.paper   :
                                 TOKENS.ink;
 
-  const dotFill =
+  const accentFill =
     variant === 'mono' ? 'currentColor' : TOKENS.accent;
 
   return (
@@ -80,7 +70,7 @@ export default function GerenteLogo({
       {...rest}
     >
       <title>{title}</title>
-      <Mark stroke={stroke} dotFill={dotFill} />
+      <Mark fill={fill} accentFill={accentFill} />
     </svg>
   );
 }
