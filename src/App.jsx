@@ -9,7 +9,10 @@ import SortTasks from './components/sort/SortTasks';
 import SummaryDashboard from './components/summary/SummaryDashboard';
 import NotFound from './pages/NotFound';
 import GerenteLogo from './components/brand/GerenteLogo';
+import AuthSheet from './components/auth/AuthSheet';
+import UserMenu from './components/auth/UserMenu';
 import useTaskManager from './hooks/useTaskManager';
+import useAuth from './hooks/useAuth';
 import useLocalStorage from './hooks/useLocalStorage';
 import useToast from './hooks/useToast';
 import { sortTasks } from './features/taskSorting';
@@ -39,6 +42,7 @@ const KeyboardIcon = (props) => (
 );
 
 const TaskManagerPage = () => {
+  const auth = useAuth();
   const {
     tasks,
     addTask,
@@ -49,14 +53,19 @@ const TaskManagerPage = () => {
     cancelEdit,
     reorderTasks,
     clearCompleted,
-  } = useTaskManager();
+  } = useTaskManager(auth.user);
 
   const [workspace, setWorkspace] = useLocalStorage('gerente.workspace', 'personal');
   const [sortOption, setSortOption] = useLocalStorage('gerente.sortOption', 'default');
   const [darkMode, setDarkMode] = useState(getInitialDarkMode);
   const [pomodoroTask, setPomodoroTask] = useState(null);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
   const { toasts, showToast, dismiss } = useToast();
+
+  useEffect(() => {
+    if (auth.user && showAuth) setShowAuth(false);
+  }, [auth.user, showAuth]);
 
   useEffect(() => {
     applyDarkModeClass(darkMode);
@@ -180,6 +189,7 @@ const TaskManagerPage = () => {
           >
             {darkMode ? <SunIcon /> : <MoonIcon />}
           </button>
+          <UserMenu auth={auth} onSignInClick={() => setShowAuth(true)} />
         </div>
       </header>
 
@@ -224,6 +234,16 @@ const TaskManagerPage = () => {
       />
 
       <Toast toasts={toasts} onDismiss={dismiss} />
+
+      <AuthSheet
+        open={showAuth}
+        onClose={() => setShowAuth(false)}
+        auth={auth}
+        onSuccess={() => {
+          setShowAuth(false);
+          showToast('Signed in. Tasks now sync to the cloud.', 'success');
+        }}
+      />
 
       {showShortcuts && (
         <div className="shortcuts-modal" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
