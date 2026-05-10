@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound';
 import GerenteLogo from './components/brand/GerenteLogo';
 import AuthSheet from './components/auth/AuthSheet';
 import UserMenu from './components/auth/UserMenu';
+import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
 import useTaskManager from './hooks/useTaskManager';
 import useAuth from './hooks/useAuth';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -292,6 +293,7 @@ const App = () => (
       <Route path="/about" element={<AboutPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    <PWAUpdatePrompt />
   </Router>
 );
 
