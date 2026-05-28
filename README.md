@@ -40,9 +40,7 @@ Gerente is a simple and effective task management application that lets you stay
 
 ## 🔗 Live Preview
 
-Coming soon: A live version of Gerente will be available at  
-[https://gerente-app.vercel.app](https://gerente-app.vercel.app)  
-*(Link will go live after deployment)*
+[https://gerente.rianfernando.com](https://gerente.rianfernando.com)
 
 ---
 
