@@ -16,6 +16,7 @@ import useTaskManager from './hooks/useTaskManager';
 import useAuth from './hooks/useAuth';
 import useLocalStorage from './hooks/useLocalStorage';
 import useToast from './hooks/useToast';
+import useDocumentMeta from './hooks/useDocumentMeta';
 import { sortTasks } from './features/taskSorting';
 import { getInitialDarkMode, persistDarkMode, applyDarkModeClass } from './features/darkMode';
 import { CATEGORY_KEYS } from './constants/themes';
@@ -43,6 +44,12 @@ const KeyboardIcon = (props) => (
 );
 
 const TaskManagerPage = () => {
+  useDocumentMeta({
+    title: 'Gerente — Focused task manager with Pomodoro',
+    description:
+      'Gerente is a focused task manager with workspaces, priorities, due dates, drag-and-drop ordering, and a built-in Pomodoro timer. Sign in to sync across devices or stay local.',
+    path: '/',
+  });
   const auth = useAuth();
   const {
     tasks,
@@ -266,25 +273,41 @@ const TaskManagerPage = () => {
       )}
 
       <footer className="app-footer">
-        Gerente {APP_VERSION} © {APP_YEAR} · <Link to="/about">About</Link>
+        Gerente {APP_VERSION} © {APP_YEAR} · <Link to="/about">About</Link> ·{' '}
+        <a href="https://rianfernando.com" rel="author" target="_blank">
+          Built by Rian Fernando
+        </a>
       </footer>
     </div>
   );
 };
 
-const AboutPage = () => (
-  <div className="app-container">
-    <h1>About Gerente</h1>
-    <p style={{ color: 'var(--text-secondary, #555)', lineHeight: 1.6 }}>
-      Gerente (Portuguese for "Manager") is a simple, focused task manager with workspaces,
-      priorities, drag-and-drop ordering, and a built-in Pomodoro timer. Data persists in your
-      browser — no account required.
-    </p>
-    <p>
-      <Link to="/">← Back to tasks</Link>
-    </p>
-  </div>
-);
+const AboutPage = () => {
+  useDocumentMeta({
+    title: 'About Gerente — Built by Rian Fernando',
+    description:
+      'About Gerente, a focused task manager with workspaces, priorities, and a built-in Pomodoro timer. Built by Rian Fernando.',
+    path: '/about',
+  });
+  return (
+    <div className="app-container">
+      <h1>About Gerente</h1>
+      <p style={{ color: 'var(--text-secondary, #555)', lineHeight: 1.6 }}>
+        Gerente (Portuguese for "Manager") is a focused task manager with workspaces,
+        priorities, drag-and-drop ordering, and a built-in Pomodoro timer. Sign in to sync
+        across devices, or use it offline and your data stays on your browser.
+      </p>
+      <p>
+        <Link to="/">← Back to tasks</Link>
+      </p>
+      <footer className="app-footer">
+        <a href="https://rianfernando.com" rel="author" target="_blank">
+          Built by Rian Fernando
+        </a>
+      </footer>
+    </div>
+  );
+};
 
 const App = () => (
   <Router>

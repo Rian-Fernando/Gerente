@@ -11,6 +11,8 @@ export default defineConfig({
       includeAssets: [
         'favicon.ico',
         'robots.txt',
+        'sitemap.xml',
+        'og-image.svg',
         'brand/gerente-mark.svg',
         'brand/gerente-mark-mono.svg',
         'brand/gerente-mark-reverse.svg',
