@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Gerente">
+  <title>Gerente</title>
+  <style>
+    .mark { fill: #111114; }
+    .accent { fill: #E25A3C; }
+    @media (prefers-color-scheme: dark) {
+      .mark { fill: #F4F1EC; }
+    }
+  </style>
+  <path class="mark" d="M40 40 H110 V60 H60 V150 H40 Z"/>
+  <path class="mark" d="M160 160 H90 V140 H140 V50 H160 Z"/>
+  <rect class="accent" x="92" y="92" width="16" height="16"/>
+</svg>
