@@ -28,7 +28,12 @@
   animation: scale-in 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
 }
 
-.pomodoro-dialog h3 {
+.pomodoro-dialog:focus-visible {
+  outline: 2px solid var(--brand-accent, #e25a3c);
+  outline-offset: 4px;
+}
+
+.pomodoro-heading {
   margin: 0 0 6px;
   font-size: 18px;
   font-weight: 600;
@@ -37,8 +42,9 @@
 
 .pomodoro-task {
   margin: 0 0 18px;
-  font-size: 14px;
-  color: var(--text-secondary, #6e6e73);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary, #1d1d1f);
 }
 
 .pomodoro-clock {
@@ -79,10 +85,17 @@
   margin-bottom: 20px;
 }
 
+/* Brand terracotta while focusing, green on the break — previously this was set
+   from JS as a red→yellow→green ramp that read as an error state mid-session. */
 .pomodoro-bar-fill {
   height: 100%;
   border-radius: 999px;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  background-color: var(--brand-accent, #e25a3c);
+  transition: width 0.3s linear, background-color 0.3s ease;
+}
+
+.break-mode .pomodoro-bar-fill {
+  background-color: #2f8a5b;
 }
 
 .pomodoro-controls {
@@ -108,22 +121,19 @@
 }
 
 .pomodoro-btn-primary {
-  background: var(--accent, #0071e3);
+  background: var(--brand-accent, #e25a3c);
   color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 113, 227, 0.25);
+  box-shadow: 0 1px 2px rgba(226, 90, 60, 0.25);
 }
 
 .pomodoro-btn-primary:hover {
-  background: var(--accent-hover, #0077ed);
+  background: var(--brand-accent-hover, #c4442a);
 }
 
 .pomodoro-btn-primary.active {
-  background: var(--priority-high, #ff3b30);
-  box-shadow: 0 1px 2px rgba(255, 59, 48, 0.25);
-}
-
-.pomodoro-btn-primary.active:hover {
-  background: #ff453a;
+  background: var(--text-primary, #111114);
+  color: var(--surface-solid, #fff);
+  box-shadow: none;
 }
 
 .pomodoro-btn-secondary {
@@ -188,8 +198,35 @@
 
 .pomodoro-settings input:focus {
   outline: none;
-  border-color: var(--accent, #0071e3);
-  box-shadow: 0 0 0 3px var(--accent-soft, rgba(0, 113, 227, 0.12));
+  border-color: var(--brand-accent, #e25a3c);
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(226, 90, 60, 0.16));
+}
+
+.pomodoro-controls button:focus-visible,
+.pomodoro-settings input:focus-visible {
+  outline: 2px solid var(--brand-accent, #e25a3c);
+  outline-offset: 2px;
+}
+
+.pomodoro-hint kbd {
+  padding: 2px 6px;
+  border: 1px solid var(--border-color, rgba(60, 60, 67, 0.18));
+  border-radius: 5px;
+  background: var(--tab-bg, rgba(118, 118, 128, 0.12));
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pomodoro-backdrop,
+  .pomodoro-dialog {
+    animation: none;
+  }
+
+  .pomodoro-bar-fill {
+    transition: none;
+  }
 }
 
 .pomodoro-cycles {

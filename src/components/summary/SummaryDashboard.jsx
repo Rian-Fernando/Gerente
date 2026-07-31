@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react';
 import { CATEGORY_LABELS, CATEGORY_COLORS } from '../../constants/themes';
+import { todayISO } from '../../helpers/formatDate';
 import './SummaryDashboard.css';
 
 const SummaryDashboard = ({ tasks, activeWorkspace }) => {
   const stats = useMemo(() => {
-    const today = new Date().toDateString();
+    const today = todayISO();
+    const todayLabel = new Date().toDateString();
     const completed = tasks.filter((t) => t.completed);
     const completedToday = completed.filter(
-      (t) => t.completedAt && new Date(t.completedAt).toDateString() === today
+      (t) => t.completedAt && new Date(t.completedAt).toDateString() === todayLabel
     );
     const durations = completed
       .filter((t) => t.createdAt && t.completedAt)
@@ -15,9 +17,9 @@ const SummaryDashboard = ({ tasks, activeWorkspace }) => {
     const avgMin = durations.length
       ? Math.round(durations.reduce((s, m) => s + m, 0) / durations.length)
       : 0;
-    const overdue = tasks.filter(
-      (t) => !t.completed && t.dueDate && new Date(t.dueDate) < new Date(today)
-    ).length;
+    // Plain string comparison of two local YYYY-MM-DD values — a task due
+    // today is not overdue.
+    const overdue = tasks.filter((t) => !t.completed && t.dueDate && t.dueDate < today).length;
     return { completedToday: completedToday.length, avgMin, overdue };
   }, [tasks]);
 

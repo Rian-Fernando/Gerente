@@ -8,10 +8,10 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^13.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.0",
+    "three": "^0.185.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -20,7 +20,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "browserslist": {
     "production": [
@@ -35,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.4",
     "jsdom": "^29.0.2",

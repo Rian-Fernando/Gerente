@@ -4,76 +4,8 @@
   gap: 18px;
 }
 
-.task-list-header {
-  position: sticky;
-  top: 0;
-  background: var(--surface, rgba(255, 255, 255, 0.72));
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  padding: 12px 4px;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-primary, #1d1d1f);
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.task-list-header-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(17, 17, 20, 0.06);
-}
-
-.task-stats {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.task-stat {
-  flex: 1;
-  min-width: 140px;
-  border-radius: var(--radius-md, 14px);
-  padding: 14px 16px;
-  text-align: center;
-  background: var(--stat-bg, rgba(118, 118, 128, 0.06));
-  border: 1px solid var(--border-color, rgba(60, 60, 67, 0.12));
-  transition: transform 0.15s ease;
-}
-
-.task-stat:hover {
-  transform: translateY(-1px);
-}
-
-.task-stat h4 {
-  margin: 0;
-  font-size: 11px;
-  color: var(--text-secondary, #6e6e73);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-}
-
-.task-stat p {
-  margin: 6px 0 0;
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  color: var(--text-primary, #1d1d1f);
-  font-variant-numeric: tabular-nums;
-}
-
-.task-stat-completed { background: var(--stat-completed-bg); border-color: transparent; }
-.task-stat-completed h4 { color: var(--stat-completed-fg); }
-.task-stat-pending { background: var(--stat-pending-bg); border-color: transparent; }
-.task-stat-pending h4 { color: var(--stat-pending-fg); }
+/* The workspace name and its counts now live once, in .board-toolbar — this
+   component previously repeated them alongside the summary strip above it. */
 
 .task-list {
   list-style-type: none;
@@ -289,9 +221,6 @@
 }
 
 @media (max-width: 600px) {
-  .task-list-header { font-size: 16px; padding: 10px 4px; }
-  .task-stat { min-width: 100px; }
-  .task-stat p { font-size: 20px; }
   .task-badge, .task-due-badge { font-size: 10px; }
   .delete-btn { margin-left: 0; }
 }

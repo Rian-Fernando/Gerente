@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import seoHtml from './scripts/seo-html-plugin.js';
 
 export default defineConfig({
   plugins: [
     react(),
+    seoHtml(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
@@ -12,6 +14,7 @@ export default defineConfig({
         'favicon.ico',
         'robots.txt',
         'sitemap.xml',
+        'llms.txt',
         'og-image.png',
         'brand/gerente-mark.svg',
         'brand/gerente-mark-mono.svg',
@@ -22,14 +25,26 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,ico,woff2}'],
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api/, /^\/auth/],
+        // Without these, navigating to a real file served from public/ would be
+        // answered with the SPA shell once the service worker is installed —
+        // /llms.txt in particular has to stay readable as plain text.
+        navigateFallbackDenylist: [
+          /^\/api/,
+          /^\/auth/,
+          /^\/llms\.txt$/,
+          /^\/robots\.txt$/,
+          /^\/sitemap\.xml$/,
+          /^\/og-image\.png$/,
+        ],
       },
       manifest: {
         name: 'Gerente',
         short_name: 'Gerente',
         description:
           'A focused task manager with workspaces, priorities, and a built-in Pomodoro timer.',
-        start_url: '/',
+        // Installed from the home screen, Gerente should open the task board
+        // rather than the marketing landing page.
+        start_url: '/app',
         scope: '/',
         display: 'standalone',
         orientation: 'portrait',

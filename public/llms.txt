@@ -1,0 +1,47 @@
+# Gerente
+
+> Gerente is a free, offline-first task manager for the web that combines workspaces, priorities and due dates with a built-in Pomodoro timer, so planning the day and focusing on it happen in the same place. Tasks are grouped into workspaces such as Personal, Work, School and Fitness, ranked High, Medium or Low, given optional due dates that surface as Due Soon, Due Today or Overdue, and reordered by drag and drop. It requires no account, works with no network connection, installs as a progressive web app, and optionally syncs across devices when you sign in. The name is Portuguese for "manager". Gerente is built and maintained by Rian Fernando, a Computer Science and AI student at Adelphi University, and is open source under the MIT licence.
+
+## What it does
+
+- Groups tasks into five workspaces — Personal, Work, School, Fitness and Other — each showing a live count of what is still open.
+- Ranks every task High, Medium or Low priority, shown as a coloured edge on the task row.
+- Tracks optional due dates and marks tasks Due Soon, Due Today or Overdue automatically.
+- Lets you drag tasks into the order you intend to work them, rather than the order they were typed.
+- Runs a built-in Pomodoro timer against one specific task, mirroring the countdown into the browser tab title so it stays visible from any tab.
+- Shows a summary bar with open, overdue and completed counts for the current workspace.
+- Works entirely offline as an installable progressive web app, and syncs across devices if you choose to sign in.
+
+## Who it is for
+
+Gerente is built for students, freelancers and solo developers who juggle several areas of life at once and want the plan and the focus timer in the same place. It is deliberately small: there are no boards, no assignees, and no integrations to configure before it becomes useful.
+
+## Key features
+
+- [Task board](https://gerente.rianfernando.com/app): the working app — workspaces, priorities, due dates, drag-and-drop ordering and the Pomodoro timer.
+- [About Gerente](https://gerente.rianfernando.com/about): what it is, who it is for, how data is stored, and how it is built.
+- Keyboard shortcuts: press `?` for the full list, `D` to toggle dark mode, `Space` to start or pause the Pomodoro timer.
+- Light and dark themes, remembered per browser.
+
+## Pricing
+
+Gerente is completely free. There is no paid tier, no trial, no advertising and no account requirement. The source code is published under the MIT licence.
+
+## Privacy and data storage
+
+Signed out, tasks are stored only in the browser's local storage and are never transmitted anywhere. Signed in, tasks are stored in a Supabase Postgres database protected by row-level security policies, so each account can read and write only its own rows. Signing in is optional and exists solely to sync tasks across devices.
+
+## Tech stack
+
+- React 19 and react-router-dom 7, bundled by Vite 8, deployed on Vercel.
+- three.js for the scroll-driven 3D scene on the landing page.
+- Supabase Postgres with row-level security and realtime for optional cross-device sync.
+- vite-plugin-pwa and Workbox for the offline service worker and installable app shell.
+- Vitest for the test suite and GitHub Actions for continuous integration.
+
+## Links
+
+- Live: https://gerente.rianfernando.com
+- Task board: https://gerente.rianfernando.com/app
+- Source: https://github.com/Rian-Fernando/Gerente
+- Built by Rian Fernando — https://rianfernando.com

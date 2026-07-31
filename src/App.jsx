@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
@@ -19,8 +19,9 @@ import useToast from './hooks/useToast';
 import useDocumentMeta from './hooks/useDocumentMeta';
 import { sortTasks } from './features/taskSorting';
 import { getInitialDarkMode, persistDarkMode, applyDarkModeClass } from './features/darkMode';
-import { CATEGORY_KEYS } from './constants/themes';
+import { CATEGORY_KEYS, CATEGORY_COLORS, CATEGORY_LABELS } from './constants/themes';
 import { APP_VERSION, APP_YEAR } from './constants/appInfo';
+import { AUDIENCE, AUTHOR_NAME, AUTHOR_URL, REPO_URL } from './constants/siteInfo';
 import './styles/AppContainer.css';
 
 const SunIcon = (props) => (
@@ -45,10 +46,10 @@ const KeyboardIcon = (props) => (
 
 const TaskManagerPage = () => {
   useDocumentMeta({
-    title: 'Gerente — Focused task manager with Pomodoro',
+    title: 'Your tasks — Gerente',
     description:
-      'Gerente is a focused task manager with workspaces, priorities, due dates, drag-and-drop ordering, and a built-in Pomodoro timer. Sign in to sync across devices or stay local.',
-    path: '/',
+      'The Gerente task board: group tasks into workspaces, set priorities and due dates, reorder by drag and drop, and run a Pomodoro timer on whatever you are working on right now.',
+    path: '/app',
   });
   const auth = useAuth();
   const {
@@ -140,6 +141,12 @@ const TaskManagerPage = () => {
     return sortTasks(scoped, sortOption);
   }, [tasks, workspace, sortOption]);
 
+  const doneCount = useMemo(
+    () => filteredTasks.filter((t) => t.completed).length,
+    [filteredTasks]
+  );
+  const openCount = filteredTasks.length - doneCount;
+
   const handleReorderTasks = useCallback(
     (reorderedVisible) => {
       if (sortOption !== 'default') {
@@ -173,9 +180,11 @@ const TaskManagerPage = () => {
     <div className="app-container">
       <header className="app-header">
         <h1 className="app-title">
-          <span className="app-brand-lockup">
-            <GerenteLogo size={32} variant="lockup" title="Gerente" />
-          </span>
+          <Link to="/" className="app-brand-link" aria-label="Gerente home">
+            <span className="app-brand-lockup">
+              <GerenteLogo size={32} variant="lockup" title="Gerente" />
+            </span>
+          </Link>
           <span className="app-subtitle">Task Manager</span>
         </h1>
         <div className="app-actions">
@@ -201,39 +210,63 @@ const TaskManagerPage = () => {
         </div>
       </header>
 
-      <SummaryDashboard tasks={tasks} activeWorkspace={workspace} />
+      <main>
+        {/* Workspace first: it is the primary navigation, and everything below
+            is scoped to whichever one is selected. */}
+        <WorkspaceTabs
+          activeWorkspace={workspace}
+          onChangeWorkspace={setWorkspace}
+          taskCounts={taskCounts}
+        />
 
-      <WorkspaceTabs
-        activeWorkspace={workspace}
-        onChangeWorkspace={setWorkspace}
-        taskCounts={taskCounts}
-      />
+        <SummaryDashboard tasks={tasks} activeWorkspace={workspace} />
 
-      <div className="toolbar">
-        <SortTasks sortMethod={sortOption} onChangeSort={setSortOption} />
-        <button
-          type="button"
-          className="clear-completed-btn"
-          onClick={handleClearCompleted}
-          title="Clear completed tasks in this workspace"
-        >
-          Clear completed
-        </button>
-      </div>
+        <TaskInput onAddTask={handleAddTask} defaultCategory={workspace} />
 
-      <TaskInput onAddTask={handleAddTask} defaultCategory={workspace} />
+        {/* Sort and clear sit directly on the list they act on, rather than
+            above the composer where they read as part of adding a task. */}
+        <div className="board-toolbar">
+          <h2 className="board-toolbar__title">
+            <span
+              className="board-toolbar__dot"
+              style={{ backgroundColor: CATEGORY_COLORS[workspace] }}
+              aria-hidden="true"
+            />
+            {CATEGORY_LABELS[workspace]}
+            <span className="board-toolbar__count">
+              {openCount} open{doneCount > 0 ? ` · ${doneCount} done` : ''}
+            </span>
+          </h2>
+          <div className="board-toolbar__actions">
+            <SortTasks sortMethod={sortOption} onChangeSort={setSortOption} />
+            <button
+              type="button"
+              className="clear-completed-btn"
+              onClick={handleClearCompleted}
+              disabled={doneCount === 0}
+              title={
+                doneCount === 0
+                  ? 'Nothing completed in this workspace yet'
+                  : 'Clear completed tasks in this workspace'
+              }
+            >
+              Clear completed
+            </button>
+          </div>
+        </div>
 
-      <TaskList
-        tasks={filteredTasks}
-        workspace={workspace}
-        onDeleteTask={handleDeleteTask}
-        onToggleComplete={handleToggleComplete}
-        onEditTask={editTask}
-        onSaveTask={saveTask}
-        onCancelEdit={cancelEdit}
-        onReorderTasks={handleReorderTasks}
-        onStartPomodoro={handleStartPomodoro}
-      />
+        <TaskList
+          tasks={filteredTasks}
+          workspace={workspace}
+          onDeleteTask={handleDeleteTask}
+          onToggleComplete={handleToggleComplete}
+          onEditTask={editTask}
+          onSaveTask={saveTask}
+          onCancelEdit={cancelEdit}
+          onReorderTasks={handleReorderTasks}
+          onStartPomodoro={handleStartPomodoro}
+        />
+      </main>
 
       <PomodoroTimer
         task={pomodoroTask}
@@ -254,18 +287,25 @@ const TaskManagerPage = () => {
       />
 
       {showShortcuts && (
-        <div className="shortcuts-modal" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+        <div className="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-heading">
           <div className="shortcuts-backdrop" onClick={() => setShowShortcuts(false)} />
           <div className="shortcuts-content">
-            <h3>Keyboard Shortcuts</h3>
+            <h2 id="shortcuts-heading">Keyboard shortcuts</h2>
             <ul>
               <li><kbd>?</kbd> Toggle this help</li>
               <li><kbd>D</kbd> Toggle dark mode</li>
-              <li><kbd>Enter</kbd> Add task / Save edit</li>
-              <li><kbd>Esc</kbd> Cancel edit / Close Pomodoro / Close this</li>
+              <li><kbd>Enter</kbd> Add task / save edit</li>
+              <li><kbd>Esc</kbd> Cancel edit / close Pomodoro / close this</li>
               <li><kbd>Space</kbd> Start / pause Pomodoro</li>
             </ul>
-            <button type="button" onClick={() => setShowShortcuts(false)} className="shortcuts-close">
+            {/* Autofocused so Esc and Tab have somewhere sensible to start,
+                and so focus is not left behind on the page underneath. */}
+            <button
+              type="button"
+              autoFocus
+              onClick={() => setShowShortcuts(false)}
+              className="shortcuts-close"
+            >
               Got it
             </button>
           </div>
@@ -273,8 +313,9 @@ const TaskManagerPage = () => {
       )}
 
       <footer className="app-footer">
-        Gerente {APP_VERSION} © {APP_YEAR} · <Link to="/about">About</Link> ·{' '}
-        <a href="https://rianfernando.com" rel="author" target="_blank">
+        Gerente {APP_VERSION} © {APP_YEAR} · <Link to="/">Home</Link> ·{' '}
+        <Link to="/about">About</Link> ·{' '}
+        <a href="https://rianfernando.com" rel="author noopener" target="_blank">
           Built by Rian Fernando
         </a>
       </footer>
@@ -284,39 +325,92 @@ const TaskManagerPage = () => {
 
 const AboutPage = () => {
   useDocumentMeta({
-    title: 'About Gerente — Built by Rian Fernando',
+    title: 'About Gerente — who built it and how it works',
     description:
-      'About Gerente, a focused task manager with workspaces, priorities, and a built-in Pomodoro timer. Built by Rian Fernando.',
+      'Gerente is a free, offline-first task manager with workspaces, priorities, due dates and a built-in Pomodoro timer, built by Rian Fernando with React, Vite and Supabase.',
     path: '/about',
   });
+
   return (
-    <div className="app-container">
-      <h1>About Gerente</h1>
-      <p style={{ color: 'var(--text-secondary, #555)', lineHeight: 1.6 }}>
-        Gerente (Portuguese for "Manager") is a focused task manager with workspaces,
-        priorities, drag-and-drop ordering, and a built-in Pomodoro timer. Sign in to sync
-        across devices, or use it offline and your data stays on your browser.
-      </p>
-      <p>
-        <Link to="/">← Back to tasks</Link>
-      </p>
+    <div className="app-container prose-page">
+      <nav aria-label="Breadcrumb" className="prose-page__nav">
+        <Link to="/">← Gerente</Link>
+      </nav>
+
+      <main>
+        <h1>About Gerente</h1>
+
+        <p>
+          Gerente (Portuguese for <em>manager</em>) is a free task manager for the web. It
+          groups tasks into workspaces such as Personal, Work and School, ranks them by
+          priority, tracks due dates, and includes a built-in Pomodoro timer, so the plan
+          for the day and the focus session live in the same place.
+        </p>
+
+        <h2>Who it is for</h2>
+        <p>
+          {AUDIENCE} It is deliberately small: there are no boards, no assignees and no
+          integrations to configure before it becomes useful.
+        </p>
+
+        <h2>How your data is stored</h2>
+        <p>
+          Signed out, tasks are kept in your browser’s local storage and never leave the
+          device. Signing in is optional; it moves tasks to a Supabase Postgres database
+          protected by row-level security policies, so an account can only ever read and
+          write its own rows. Gerente is a progressive web app, so it installs to the dock
+          or home screen and keeps working with no network connection.
+        </p>
+
+        <h2>How it is built</h2>
+        <p>
+          Gerente is a React 19 single-page app bundled with Vite 8, with a three.js scene
+          on the landing page, Supabase for optional auth and sync, Workbox for the offline
+          service worker, and Vitest and GitHub Actions for tests and CI. The full source
+          is on <a href={REPO_URL} rel="noopener" target="_blank">GitHub</a> under the MIT
+          licence, along with a log of the architecture decisions behind it.
+        </p>
+
+        <p className="prose-page__back">
+          <Link to="/app">Open the task board →</Link>
+        </p>
+      </main>
+
       <footer className="app-footer">
-        <a href="https://rianfernando.com" rel="author" target="_blank">
-          Built by Rian Fernando
+        <Link to="/">Home</Link> ·{' '}
+        <a href={REPO_URL} rel="noopener" target="_blank">Source</a> ·{' '}
+        <a href={AUTHOR_URL} rel="author noopener" target="_blank">
+          Built by {AUTHOR_NAME}
         </a>
       </footer>
     </div>
   );
 };
 
+// Split out so the task board never downloads the landing page's three.js scene.
+const Landing = lazy(() => import('./pages/Landing'));
+
+/**
+ * Everything below the router. Exported separately so tests can mount the real
+ * app inside a MemoryRouter — nesting one router inside another throws.
+ */
+export const AppRoutes = () => (
+  <>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/app" element={<TaskManagerPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+    <PWAUpdatePrompt />
+  </>
+);
+
 const App = () => (
   <Router>
-    <Routes>
-      <Route path="/" element={<TaskManagerPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-    <PWAUpdatePrompt />
+    <AppRoutes />
   </Router>
 );
 

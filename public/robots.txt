@@ -1,5 +1,27 @@
-# https://www.robotstxt.org/robotstxt.html
+# Gerente — https://gerente.rianfernando.com
+# Open to everyone, including AI answer engines, so the site can be read and cited.
+# There is nothing private to exclude: Gerente has no server-rendered user data and
+# no API routes of its own — signed-out tasks stay in the browser, and signed-in
+# tasks are read straight from Supabase by the authenticated client.
+
 User-agent: *
+Allow: /
+
+# AI answer engines & citation/training crawlers — explicitly welcomed, by name.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Amazonbot
+User-agent: Bytespider
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://gerente.rianfernando.com/sitemap.xml

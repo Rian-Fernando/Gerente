@@ -140,6 +140,59 @@ body {
   color: var(--text-primary);
 }
 
+/* The wordmark doubles as the way back to the landing page. */
+.app-brand-link {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-brand-link:focus-visible {
+  outline: 2px solid var(--brand-accent, #e25a3c);
+  outline-offset: 4px;
+}
+
+/* Long-form routes (About): readable measure, app chrome, no task board. */
+.prose-page main {
+  max-width: 68ch;
+}
+
+.prose-page h1 {
+  margin: 0 0 20px;
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.prose-page h2 {
+  margin: 36px 0 10px;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.prose-page p {
+  margin: 0 0 14px;
+  color: var(--text-secondary);
+  line-height: 1.66;
+}
+
+.prose-page__nav {
+  margin-bottom: 26px;
+  font-size: 15px;
+}
+
+.prose-page__nav a,
+.prose-page a {
+  color: var(--brand-accent, #e25a3c);
+  text-underline-offset: 3px;
+}
+
+.prose-page__back {
+  margin-top: 30px;
+  font-weight: 600;
+}
+
 .app-subtitle {
   font-size: 12px;
   font-weight: 500;
@@ -180,12 +233,48 @@ body {
   transform: scale(0.95);
 }
 
-.toolbar {
+/* Header for the list itself: which workspace you are looking at, how much is
+   in it, and the two controls that act on it. */
+.board-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 12px 18px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.board-toolbar__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.board-toolbar__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.board-toolbar__count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.board-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
@@ -198,13 +287,38 @@ body {
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  font-family: inherit;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
-.clear-completed-btn:hover {
+.clear-completed-btn:hover:not(:disabled) {
   background: var(--alert-bg);
   color: var(--priority-high);
   border-color: var(--alert-border);
+}
+
+/* Nothing to clear — say so by state rather than with a toast on click. */
+.clear-completed-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.clear-completed-btn:focus-visible,
+.board-toolbar__actions select:focus-visible {
+  outline: 2px solid var(--brand-accent, #e25a3c);
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .board-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .board-toolbar__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
 .app-footer {
@@ -260,7 +374,7 @@ body {
   animation: scale-in 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2);
 }
 
-.shortcuts-content h3 {
+.shortcuts-content h2 {
   margin: 0 0 18px;
   font-size: 18px;
   font-weight: 600;
@@ -357,7 +471,7 @@ body {
     display: none;
   }
 
-  .toolbar {
+  .board-toolbar__actions {
     flex-direction: column;
     align-items: stretch;
   }

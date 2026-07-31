@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { PRIORITY_COLORS, CATEGORY_COLORS, CATEGORY_LABELS } from '../constants/themes';
-import { formatDate } from '../helpers/formatDate';
+import { formatDate, daysUntil, todayISO } from '../helpers/formatDate';
 import './TaskList.css';
 
 const getDueStatus = (dueDate, today) => {
   if (!dueDate) return null;
   if (dueDate < today) return { label: 'Overdue', className: 'due-overdue' };
   if (dueDate === today) return { label: 'Due today', className: 'due-today' };
-  const daysAway = Math.ceil((new Date(dueDate) - new Date(today)) / 86400000);
-  if (daysAway <= 2) return { label: 'Due soon', className: 'due-soon' };
-  return { label: '', className: 'due-future' };
+  return daysUntil(dueDate, today) <= 2
+    ? { label: 'Due soon', className: 'due-soon' }
+    : { label: '', className: 'due-future' };
 };
 
 const TimerIcon = () => (
@@ -38,38 +38,13 @@ const TaskList = ({
   onStartPomodoro,
 }) => {
   const [hoveredId, setHoveredId] = useState(null);
-  const today = new Date().toISOString().split('T')[0];
-  const workspaceLabel = workspace ? workspace.charAt(0).toUpperCase() + workspace.slice(1) : 'Tasks';
-
-  const completedCount = tasks.filter((t) => t.completed).length;
-  const pendingCount = tasks.length - completedCount;
+  // Local date, not UTC — late in the evening the UTC date is already tomorrow,
+  // which made tasks due tomorrow read as "Due today".
+  const today = todayISO();
+  const workspaceLabel = CATEGORY_LABELS[workspace] || 'Tasks';
 
   return (
     <div className="task-list-container">
-      <div className="task-list-header">
-        <span
-          className="task-list-header-dot"
-          style={{ backgroundColor: CATEGORY_COLORS[workspace] || '#86868B' }}
-          aria-hidden="true"
-        />
-        Workspace: {workspaceLabel}
-      </div>
-
-      <div className="task-stats">
-        <div className="task-stat task-stat-total">
-          <h4>Total</h4>
-          <p>{tasks.length}</p>
-        </div>
-        <div className="task-stat task-stat-completed">
-          <h4>Completed</h4>
-          <p>{completedCount}</p>
-        </div>
-        <div className="task-stat task-stat-pending">
-          <h4>Pending</h4>
-          <p>{pendingCount}</p>
-        </div>
-      </div>
-
       {tasks.length === 0 ? (
         <div className="task-empty-state">
           <div className="task-empty-icon" aria-hidden="true">
