@@ -123,6 +123,7 @@ visible copy cannot drift apart. `src/seo.test.js` holds all of it to CI.
 | Drag & drop | `@hello-pangea/dnd` (React 19-compatible fork of react-beautiful-dnd) |
 | Database | Supabase Postgres + RLS + realtime |
 | Hosting | Vercel (custom subdomain, auto-deploy from `main`) |
+| Feedback | [Feedex](https://feedex.rianfernando.com) widget, embedded at build time |
 | CI | GitHub Actions — tests, build, CodeQL, IndexNow |
 
 ## Run it
@@ -160,6 +161,7 @@ src/
   seo.test.js                  CI guard for robots, llms.txt, sitemap, FAQ, redirects
 scripts/
   seo-html-plugin.js           builds head metadata, JSON-LD and the noscript shell
+  feedex-plugin.js             embeds the Feedex feedback widget when a key is set
   indexnow.mjs                 instant-indexing ping on production deploys
   build-og-image.sh            regenerates the 1200×630 social card
 supabase/schema.sql            tasks table + RLS policies + realtime publication

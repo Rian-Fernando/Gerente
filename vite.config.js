@@ -2,11 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import seoHtml from './scripts/seo-html-plugin.js';
+import feedexWidget from './scripts/feedex-plugin.js';
 
 export default defineConfig({
   plugins: [
     react(),
     seoHtml(),
+    feedexWidget(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',

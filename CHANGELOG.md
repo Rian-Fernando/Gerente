@@ -4,6 +4,24 @@ All notable changes to Gerente are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/), and the project aims to follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- In-app feedback via [Feedex](https://feedex.rianfernando.com). The widget is
+  injected into `index.html` at build time from a project key, so nothing is
+  embedded when no key is configured and local development never posts into the
+  real inbox.
+- Reports carry the route they came from, the app version, the active theme and,
+  for signed-in users, an email to reply to. Task content is never included.
+- The launcher sits bottom-right. It is fixed at `bottom: 20px` with a 44px
+  height and `z-index: 2147483000`, far above the toast stack's `1100`, so
+  toasts sharing that corner were painted over rather than merely crowded. The
+  stack now starts above the launcher via a `--toast-offset` custom property,
+  and a test asserts the clearance holds at every breakpoint.
+- Accepts either `VITE_FEEDEX_KEY` or `NEXT_PUBLIC_FEEDEX_KEY`. Vite exposes only
+  `VITE_*` to client code, so the `NEXT_PUBLIC_` name works here purely because
+  the key is read during the build rather than at runtime.
+
 ## [1.1.0] — 2026-07-31
 
 A front door for the project, and the work needed for search engines and AI

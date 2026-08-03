@@ -1,6 +1,15 @@
+/*
+ * Toasts stack upward from above the Feedex launcher, which is fixed at
+ * bottom-right (bottom: 20px, height: 44px) with z-index 2147483000 — far above
+ * this stack, so anything sharing that corner is painted over rather than
+ * merely crowded. --toast-offset keeps the two in one place: 20 + 44 + 20 of
+ * breathing room. See scripts/feedex-plugin.js.
+ */
 .toast-stack {
+  --toast-offset: 84px;
+
   position: fixed;
-  bottom: 28px;
+  bottom: var(--toast-offset);
   right: 28px;
   display: flex;
   flex-direction: column;
@@ -68,7 +77,10 @@
 
 @media (max-width: 600px) {
   .toast-stack {
-    bottom: 14px;
+    /* The launcher tucks in to bottom/right 16px on narrow screens, but it is
+       still 44px tall, so the stack has to stay above it here too. */
+    --toast-offset: 76px;
+
     right: 14px;
     left: 14px;
     max-width: none;

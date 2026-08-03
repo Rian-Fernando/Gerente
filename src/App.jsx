@@ -12,6 +12,7 @@ import GerenteLogo from './components/brand/GerenteLogo';
 import AuthSheet from './components/auth/AuthSheet';
 import UserMenu from './components/auth/UserMenu';
 import PWAUpdatePrompt from './components/pwa/PWAUpdatePrompt';
+import FeedexBridge from './components/FeedexBridge';
 import useTaskManager from './hooks/useTaskManager';
 import useAuth from './hooks/useAuth';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -361,6 +362,13 @@ const AboutPage = () => {
           write its own rows. Gerente is a progressive web app, so it installs to the dock
           or home screen and keeps working with no network connection.
         </p>
+        <p>
+          The feedback button loads{' '}
+          <a href="https://feedex.rianfernando.com" rel="noopener" target="_blank">Feedex</a>,
+          my own open-source feedback tool. It sends nothing unless you write something and
+          submit it, and it never has access to your tasks — a report carries only the page
+          you sent it from, the app version, and your email if you happen to be signed in.
+        </p>
 
         <h2>How it is built</h2>
         <p>
@@ -405,6 +413,7 @@ export const AppRoutes = () => (
       </Routes>
     </Suspense>
     <PWAUpdatePrompt />
+    <FeedexBridge />
   </>
 );
 

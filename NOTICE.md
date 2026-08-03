@@ -23,6 +23,11 @@ provided by [Supabase](https://supabase.com). Neither is required to run Gerente
 with no environment variables set, the app runs entirely in the browser using
 local storage.
 
+The in-app feedback button is [Feedex](https://feedex.rianfernando.com), also by
+Rian Fernando ([source](https://github.com/Rian-Fernando/Feedex)). It is embedded
+only when a project key is configured, transmits nothing until someone submits a
+report, and is never given access to task data.
+
 ## Brand
 
 The Gerente name, wordmark and pivot mark in [`public/brand/`](public/brand) are
